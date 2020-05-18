@@ -1,12 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import {StyleSheet, View, FlatList, Image} from 'react-native';
 import {themeColor} from '../Constant/index';
 import Button from '../Component/Button';
 import Text from '../Component/Text';
 import {Icon, SearchBar} from 'react-native-elements';
 import Footer from '../Component/Footer';
-import Header from '../Component/header';
+import Container from '../Component/Container';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+
 const List = [
   {
     name: 'Jon Jones',
@@ -91,73 +92,71 @@ const List = [
   },
 ];
 
-function Home({navigation}) {
-  const [search, onChangeSearch] = React.useState('');
-  // const [checked, onChangeChecked] = React.useState(false);
-  // const [password, onChangePassword] = React.useState('');
-  const [loader, setLoader] = useState(false);
-  const loading = (boolean) => {
-    setLoader(boolean);
-  };
-  return (
-    <View style={{flex: 1, backgroundColor: '#E5E5E5'}}>
-      <Header />
-      <ScrollView>
-        <Text
-          color={themeColor}
-          text={'Recent Project'}
-          bold={true}
-          font={21}
-          style={styles.heading}
-        />
-        <FlatList
-          data={List}
-          renderItem={({item, index}) => (
-            <View
-              style={styles.textView}>
-              <View style={styles.itemContainer}>
-                <Text color={themeColor} text={item.name} font={18} />
-                <Text color={themeColor} text={item.address} font={15} />
-                <Text
-                  color={themeColor}
-                  text={`Created : ${item.created}   ${item.createdTime}`}
-                  font={15}
-                />
-                <Text
-                  color={themeColor}
-                  text={`Created : ${item.modified}   ${item.modifiedTime}`}
-                  font={15}
-                />
-              </View>
-              <TouchableOpacity style={styles.button}>
-                <Text
-                  text={item.status}
-                  color={
-                    item.status === 'Active'
-                      ? '#43C71B'
-                      : item.status === 'Cold'
-                      ? '#1BBAC7'
-                      : '#D96034'
-                  }
-                  font={14}
-                  bold={true}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Image
-                  source={require('../assets/dots.png')}
-                  height={20}
-                  style={{paddingHorizontal: 8}}
-                  resizeMode={'contain'}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      </ScrollView>
-      <Footer />
-    </View>
-  );
+class Home extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    let {navigation} = this.props;
+    return (
+        <Container navigation={navigation}>
+          <ScrollView>
+            <Text
+              color={themeColor}
+              text={'Recent Project'}
+              bold={true}
+              font={21}
+              style={styles.heading}
+            />
+            <FlatList
+              data={List}
+              renderItem={({item, index}) => (
+                <View style={styles.textView}>
+                  <View style={styles.itemContainer}>
+                    <Text color={themeColor} text={item.name} font={18} />
+                    <Text color={themeColor} text={item.address} font={15} />
+                    <Text
+                      color={themeColor}
+                      text={`Created : ${item.created}   ${item.createdTime}`}
+                      font={15}
+                    />
+                    <Text
+                      color={themeColor}
+                      text={`Created : ${item.modified}   ${item.modifiedTime}`}
+                      font={15}
+                    />
+                  </View>
+                  <TouchableOpacity style={styles.button}>
+                    <Text
+                      text={item.status}
+                      color={
+                        item.status === 'Active'
+                          ? '#43C71B'
+                          : item.status === 'Cold'
+                          ? '#1BBAC7'
+                          : '#D96034'
+                      }
+                      font={14}
+                      bold={true}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Image
+                      source={require('../assets/dots.png')}
+                      height={20}
+                      style={{paddingHorizontal: 8}}
+                      resizeMode={'contain'}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
+          </ScrollView>
+          <Footer />
+        </Container>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -165,14 +164,14 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
   },
-  textView : {
+  textView: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
     minHeight: 80,
     marginVertical: 5,
     padding: 5,
-    paddingLeft : 12,
+    paddingLeft: 12,
   },
   button: {
     padding: 12,

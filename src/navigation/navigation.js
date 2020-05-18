@@ -39,9 +39,9 @@ const AppStack = createStackNavigator(
 );
 
 const App = createSwitchNavigator({
-  // Splash: {
-  //   screen: SplashStack,
-  // },
+  Splash: {
+    screen: SplashStack,
+  },
   // Auth: {
   //   screen: AuthStack,
   // },
