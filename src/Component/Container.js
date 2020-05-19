@@ -32,7 +32,7 @@ export default class Header extends Component {
         panCloseMask={0.2}
         closedDrawerOffset={-3}
         style={{flex: 1 , backgroundColor : '#fff' ,}}
-        content={<ControlPanel />}>
+        content={<ControlPanel navigation = {this.props.navigation} />}>
         <View style={{backgroundColor: '#fff'}}>
           <View style={styles.header}>
             <TouchableOpacity onPress={this.openControlPanel}>
@@ -41,7 +41,7 @@ export default class Header extends Component {
                 style={styles.menu}
               />
             </TouchableOpacity>
-            <CustomText text={heading} color={themeColor} />
+            <CustomText text={heading} bold = {true} />
             <TouchableOpacity>
               <Image
                 source={require('../assets/avatar.png')}
