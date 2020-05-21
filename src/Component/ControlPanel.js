@@ -12,9 +12,9 @@ let menuItems = [
   {name: 'Leads & Projects', navigate: ''},
   {name: 'Account Settings', navigate: ''},
   {name: 'Customize Project Files', navigate: ''},
-  {name: 'Products', navigate: ''},
+  {name: 'Products', navigate: 'Products'},
   {name: 'Suppliers', navigate: 'Supplier'},
-  {name: 'Labour', navigate: ''},
+  {name: 'Labour', navigate: 'Labours'},
   {name: 'Sub-contractors', navigate: ''},
   {name: 'Analytics', navigate: ''},
 ];

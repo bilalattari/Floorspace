@@ -1,40 +1,29 @@
-import React, { Component } from 'react'
-import { Input, Icon } from 'react-native-elements'
-import { themeColor } from '../Constant'
-
-export default CustomInput = (props) =>
-  <Input
-    containerStyle={[{
-      width: '100%', marginLeft: -8,
-      marginVertical: 6,
-    }, props.containerStyle]}
-    inputContainerStyle={[{
-      borderWidth: 0, borderBottomWidth: 0,
-      width: "90%",
-    }
-      , props.inputContainerStyle]}
-    inputStyle={{ fontSize: 16, borderColor: '#D1D1D1', borderWidth: 0.5, paddingLeft: 12 }}
-    keyboardType={props.keyboardType ? props.keyboardType : 'default'}
-    placeholder={props.placeholder}
-    placeholderTextColor={'#bbb'}
-    labelStyle={{ color: themeColor, paddingBottom: 8 }}
-    value={props.value}
-
-    multiline={props.multiline}
-    secureTextEntry={props.secureTextEntry}
-    onChangeText={(text) => props.textChange ? props.textChange(text) : null}
-    errorStyle={{ color: 'red' }}
-
-    leftIcon={
-      props.icon ?
-        <Icon
-          name={props.icon}
-          size={16}
-          type={'font-awesome'}
-          color='#909291'
-        /> : null
-    }
-    leftIconContainerStyle={{ padding: 0 }}
-    {...props}
-  />
-
+import React, {Component} from 'react';
+import {Icon} from 'react-native-elements';
+import {themeColor} from '../Constant';
+import {TextInput, View} from 'react-native';
+import Text from './Text';
+export default CustomInput = (props) => (
+  <View style={{width: '88%', marginTop: props.title ?  12 : 3, alignSelf: 'center'}}>
+    {props.title ? (
+      <Text bold={true} font={15} style={{paddingBottom: 2}}>
+        {props.title}
+      </Text>
+    ) : null}
+    <TextInput
+      style={[
+        {
+          height: 50,
+          backgroundColor: '#fff',
+          elevation: 1,
+          width: '100%',
+          paddingLeft: 12,
+          fontWeight: 'bold',
+        },
+        props.customStyle,
+      ]}
+      
+      {...props}
+    />
+  </View>
+);

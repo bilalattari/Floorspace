@@ -7,6 +7,9 @@ import Home from '../screens/Home';
 import DrawImage from '../screens/DrawImage';
 import ProjectReport from '../screens/AddProject';
 import Supplier from '../screens/Supllier';
+import AddSupplier from '../screens/AddSupplier';
+import Labours from '../screens/Labours';
+import Products from '../screens/Products';
 
 const SplashStack = createStackNavigator(
   {
@@ -32,6 +35,16 @@ const AppStack = createStackNavigator(
     Supplier: {
       screen: Supplier,
     },
+    AddSupplier: {
+      screen: AddSupplier,
+    },
+    Labours: {
+      screen: Labours,
+    },
+    Products: {
+      screen: Products,
+    },
+    
   },
   {initialRouteName: 'Home', headerMode: null},
 );

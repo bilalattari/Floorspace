@@ -8,5 +8,5 @@ export default CustomText = props => (
         fontSize: props.font ? props.font : 18 ,textAlign : props.align ? props.align : "left",
         fontWeight: props.bold ? "bold" : 'normal', marginVertical: props.marginVertical ? props.marginVertical :  2,
         color: props.color ? props.color : themeColor, marginLeft: props.marginLeft ? props.marginLeft : 0,
-    }, props.style ]} numberOfLines = {props.numberOfLines  ? props.numberOfLines  : null }>{props.text || props.children}</Text>
+    }, props.style ]} numberOfLines = {props.numberOfLines  ? props.numberOfLines  : null }>{props.text || props.children   }</Text>
 );
