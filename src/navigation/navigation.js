@@ -4,12 +4,13 @@ import {createStackNavigator} from 'react-navigation-stack';
 import LoginScreen from '../screens/Login';
 import SplashScreen from '../screens/Splash';
 import Home from '../screens/Home';
-import DrawImage from '../screens/DrawImage';
-import ProjectReport from '../screens/AddProject';
 import Supplier from '../screens/Supllier';
 import AddSupplier from '../screens/AddSupplier';
 import Labours from '../screens/Labours';
+import AddLabor from '../screens/Addlabor';
 import Products from '../screens/Products';
+import Addproducts from '../screens/Addproduct';
+import Profile from '../screens/Profile';
 
 const SplashStack = createStackNavigator(
   {
@@ -44,7 +45,15 @@ const AppStack = createStackNavigator(
     Products: {
       screen: Products,
     },
-    
+    AddLabor: {
+      screen: AddLabor,
+    },
+    Addproducts: {
+      screen: Addproducts,
+    },
+    Profile: {
+      screen: Profile,
+    },
   },
   {initialRouteName: 'Home', headerMode: null},
 );

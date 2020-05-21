@@ -48,7 +48,7 @@ class Supplier extends Component {
     let {navigation} = this.props;
     return (
       <Container heading={'Supplier List'} navigation={navigation}>
-        <SectionList data={this.state.data} navigation={navigation} />
+        <SectionList data={this.state.data} navigation={navigation} type = {"AddSupplier"} />
         <AddButton onPress={() => navigation.navigate('AddSupplier' , {type : 'add'})} />
       </Container>
     );

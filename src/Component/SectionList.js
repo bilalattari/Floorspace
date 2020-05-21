@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {themeColor} from '../Constant/index';
 import Text from '../Component/Text';
 import AlphabetSectionList from 'react-native-alphabet-sectionlist';
@@ -12,6 +8,7 @@ class SectionList extends Component {
   renderItem = ({item}) => {
     return (
       <TouchableOpacity
+        onPress={() => this.props.navigation.navigate(type ,  {type : 'Edit'})}
         style={{
           backgroundColor: '#fff',
           padding: 12,

@@ -41,7 +41,8 @@ export default class ControlPanel extends Component {
           />
           <View style={{paddingLeft: 18}}>
             <CustomText text={'Andrew Owen'} color={'#fff'} />
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Profile')}>
               <CustomText
                 text={'Edit Profile'}
                 font={14}

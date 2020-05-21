@@ -48,8 +48,8 @@ class Supplier extends Component {
     let {navigation} = this.props;
     return (
       <Container heading={'Product List'} navigation={navigation}>
-        <SectionList data={this.state.data} navigation={navigation} />
-        <AddButton />
+        <SectionList data={this.state.data} navigation={navigation} type = {"Addproducts"} />
+        <AddButton onPress={() => navigation.navigate('Addproducts' , {type : 'add'})}  />
       </Container>
     );
   }
