@@ -7,29 +7,42 @@ import {
   ActivityIndicator,
   View,
   StyleSheet,
+  Image,
 } from 'react-native';
 import {themeColor, pinkColor} from '../Constant/index';
 import Text from './Text';
 export default Footer = ({}) => (
   <View style={styles.footerView}>
-    <Icon type={'material-community'} name={'home-outline'} color={'#fff'} />
-    <Icon type={'material-community'} name={'filter-outline'} color={'#fff'} />
+    <Image
+      source={require('../assets/home.png')}
+      style={styles.imageIcon}
+    />
+    <Image
+      source={require('../assets/filter.png')}
+      style={styles.imageIcon}
+    />
     <TouchableOpacity style={styles.middleButton}>
       <Icon
-        type={'font-awesome'}
+        type = {'font-awesome'}
         name={'plus'}
         color={'#000'}
         containerStyle={{paddingTop: 3}}
       />
     </TouchableOpacity>
-    <Icon type={'entypo'} name={'box'} color={'#fff'} />
-    <Icon type={'material-community'} name={'delete-outline'} color={'#fff'} />
+    <Image
+      source={require('../assets/slideshow.png')}
+      style={styles.imageIcon}
+    />
+    <Image
+      source={require('../assets/trash.png')}
+      style={styles.imageIcon}
+    />
   </View>
 );
 
 const styles = StyleSheet.create({
   footerView: {
-    width: '90%',
+    width: '86%',
     height: 50,
     borderRadius: 25,
     alignSelf: 'center',
@@ -41,6 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
+  imageIcon : {height: 25, width: 25, resizeMode: 'contain'},
   middleButton: {
     marginTop: -41,
     height: 50,

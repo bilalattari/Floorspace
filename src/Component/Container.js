@@ -13,7 +13,7 @@ import Drawer from 'react-native-drawer';
 import {themeColor} from '../Constant/index';
 import {Icon, SearchBar} from 'react-native-elements';
 import CustomText from './Text';
-import ControlPanel from '../Component/ControlPanel'
+import ControlPanel from '../Component/ControlPanel';
 export default class Header extends Component {
   closeControlPanel = () => {
     this._drawer.close();
@@ -31,9 +31,9 @@ export default class Header extends Component {
         openDrawerOffset={0.2} // 20% gap on the right side of drawer
         panCloseMask={0.2}
         closedDrawerOffset={-3}
-        style={{flex: 1 , backgroundColor : '#fff' ,}}
-        content={<ControlPanel navigation = {this.props.navigation} />}>
-        <View style={{backgroundColor: '#fff'}}>
+        style={{flex: 1, backgroundColor: '#fff' ,}}
+        content={<ControlPanel navigation={this.props.navigation} />}>
+        <View style={{backgroundColor: 'rgb(255,255,255)' ,}}>
           <View style={styles.header}>
             <TouchableOpacity onPress={this.openControlPanel}>
               <Image
@@ -41,7 +41,7 @@ export default class Header extends Component {
                 style={styles.menu}
               />
             </TouchableOpacity>
-            <CustomText text={heading} bold = {true} />
+            <CustomText text={heading} bold={true} />
             <TouchableOpacity>
               <Image
                 source={require('../assets/avatar.png')}
@@ -52,7 +52,12 @@ export default class Header extends Component {
           <SearchBar
             placeholder={placeholder ? placeholder : 'Search Existing Project'}
             containerStyle={styles.containerStyle}
+            onChangeText={(text) => this.props.onChangeText(text)}
             inputContainerStyle={styles.inputContainerStyle}
+            placeholderTextColor={'#707070'}
+            value = {this.props.value}
+            onCancel = {()=> this.props.cancel()}
+            inputStyle={{fontWeight: 'bold', fontSize: 15}}
           />
         </View>
         {this.props.children}
@@ -76,9 +81,10 @@ const styles = StyleSheet.create({
     marginVertical: 6,
   },
   inputContainerStyle: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F1F1F1',
     borderColor: '#ccc',
     borderWidth: 1,
+    height: 40,
     marginHorizontal: 15,
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,

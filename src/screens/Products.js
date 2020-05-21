@@ -9,6 +9,7 @@ class Supplier extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: '',
       data: {
         A: [
           {name: 'A Products', description: 'Some Info'},
@@ -47,9 +48,20 @@ class Supplier extends Component {
   render() {
     let {navigation} = this.props;
     return (
-      <Container heading={'Product List'} navigation={navigation}>
-        <SectionList data={this.state.data} navigation={navigation} type = {"Addproducts"} />
-        <AddButton onPress={() => navigation.navigate('Addproducts' , {type : 'add'})}  />
+      <Container
+        heading={'Product List'}
+        navigation={navigation}
+        value={this.state.search}
+        cancel={() => this.setState({search: ''})}
+        onChangeText={(text) => this.setState({search: text})}>
+        <SectionList
+          data={this.state.data}
+          navigation={navigation}
+          type={'Addproducts'}
+        />
+        <AddButton
+          onPress={() => navigation.navigate('Addproducts', {type: 'add'})}
+        />
       </Container>
     );
   }

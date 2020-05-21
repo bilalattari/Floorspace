@@ -18,6 +18,6 @@ export default AddButton = (props) => (
       alignItems: 'center',
     }}
     {...props}>
-    <Icon type = {'feather'} name = {'plus'} />
+    <Icon type = {'font-awesome'} name = {'plus'} />
     </TouchableOpacity>
 );

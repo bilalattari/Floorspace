@@ -10,6 +10,7 @@ class Supplier extends Component {
     super(props);
     this.state = {
       data: {
+        search : '',
         A: [
           {name: 'A Labour', description: 'Some Info'},
           {name: 'A Labour', description: 'Some Info'},
@@ -47,9 +48,20 @@ class Supplier extends Component {
   render() {
     let {navigation} = this.props;
     return (
-      <Container heading={'Labour List'} navigation={navigation}>
-        <SectionList data={this.state.data} navigation={navigation} type = {"AddLabor"} />
-        <AddButton onPress={() => navigation.navigate('AddLabor' , {type : 'add'})}   />
+      <Container
+        heading={'Labour List'}
+        navigation={navigation}
+        value={this.state.search}
+        cancel={() => this.setState({search: ''})}
+        onChangeText={(text) => this.setState({search: text})}>
+        <SectionList
+          data={this.state.data}
+          navigation={navigation}
+          type={'AddLabor'}
+        />
+        <AddButton
+          onPress={() => navigation.navigate('AddLabor', {type: 'add'})}
+        />
       </Container>
     );
   }

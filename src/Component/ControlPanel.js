@@ -10,7 +10,7 @@ import CustomText from './Text';
 
 let menuItems = [
   {name: 'Leads & Projects', navigate: ''},
-  {name: 'Account Settings', navigate: ''},
+  {name: 'Account Settings', navigate: 'Profile'},
   {name: 'Customize Project Files', navigate: ''},
   {name: 'Products', navigate: 'Products'},
   {name: 'Suppliers', navigate: 'Supplier'},
@@ -41,8 +41,7 @@ export default class ControlPanel extends Component {
           />
           <View style={{paddingLeft: 18}}>
             <CustomText text={'Andrew Owen'} color={'#fff'} />
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Profile')}>
+            <TouchableOpacity>
               <CustomText
                 text={'Edit Profile'}
                 font={14}

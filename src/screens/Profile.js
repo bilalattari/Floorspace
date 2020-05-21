@@ -29,7 +29,13 @@ class Profile extends Component {
         <Text font={21} bold={true} style={{padding: 12}}>
           Account Settings
         </Text>
-        <ProfileRow />
+        <ProfileRow leftText={'Subscription Settings'} rightText={'Admin'} />
+        <ProfileRow leftText={'Personal Detail'} icon={true} />
+        <Text font={21} bold={true} style={{padding: 12}}>
+          Measurment Settings
+        </Text>
+        <ProfileRow leftText={'Measurment on plan'} rightText={'Inches'} icon={true} />
+        <ProfileRow leftText={'Default door size'} rightText={'0.90'} icon={true} />
       </View>
     );
   }

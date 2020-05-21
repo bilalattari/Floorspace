@@ -95,66 +95,78 @@ const List = [
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      search: '',
+    };
   }
 
   render() {
     let {navigation} = this.props;
     return (
-        <Container navigation={navigation}>
-          <ScrollView>
-            <Text
-              color={themeColor}
-              text={'Recent Project'}
-              bold={true}
-              font={21}
-              style={styles.heading}
-            />
-            <FlatList
-              data={List}
-              renderItem={({item, index}) => (
-                <View style={styles.textView}>
-                  <View style={styles.itemContainer}>
-                    <Text color={themeColor} text={item.name} font={18} />
-                    <Text color={themeColor} text={item.address} font={15} />
-                    <Text
-                      color={themeColor}
-                      text={`Created : ${item.created}   ${item.createdTime}`}
-                      font={15}
-                    />
-                    <Text
-                      color={themeColor}
-                      text={`Created : ${item.modified}   ${item.modifiedTime}`}
-                      font={15}
-                    />
-                  </View>
-                  <TouchableOpacity style={styles.button}>
-                    <Text
-                      text={item.status}
-                      color={
-                        item.status === 'Active'
-                          ? '#43C71B'
-                          : item.status === 'Cold'
-                          ? '#1BBAC7'
-                          : '#D96034'
-                      }
-                      font={14}
-                      bold={true}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <Image
-                      source={require('../assets/dots.png')}
-                      height={20}
-                      style={{paddingHorizontal: 8}}
-                      resizeMode={'contain'}
-                    />
-                  </TouchableOpacity>
+      <Container
+        navigation={navigation}
+        value = {this.state.search}
+        cancel = {()=> this.setState({search : ""})}
+        onChangeText={(text) => this.setState({search: text})}>
+        <ScrollView>
+          <Text
+            color={themeColor}
+            text={'Recent Project'}
+            bold={true}
+            font={21}
+            style={styles.heading}
+          />
+          <FlatList
+            data={List}
+            renderItem={({item, index}) => (
+              <View style={styles.textView}>
+                <View style={styles.itemContainer}>
+                  <Text color={'#000'} text={item.name} font={18} bold={true} />
+                  <Text
+                    color={'#000'}
+                    text={item.address}
+                    font={15}
+                    bold={true}
+                  />
+                  <Text
+                    color={'#707070'}
+                    text={`Created : ${item.created} ${item.createdTime}`}
+                    font={15}
+                  />
+                  <Text
+                    color={'#707070'}
+                    text={`Created : ${item.modified} ${item.modifiedTime}`}
+                    font={15}
+                  />
                 </View>
-              )}
-            />
-          </ScrollView>
-          <Footer />
-        </Container>
+                <TouchableOpacity style={styles.button}>
+                  <Text
+                    text={item.status.toUpperCase()}
+                    color={
+                      item.status === 'Active'
+                        ? '#43C71B'
+                        : item.status === 'Cold'
+                        ? '#1BBAC7'
+                        : '#D96034'
+                    }
+                    font={14}
+                    bold={true}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image
+                    source={require('../assets/dots.png')}
+                    height={20}
+                    style={{paddingHorizontal: 8}}
+                    resizeMode={'contain'}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          />
+        </ScrollView>
+        <Footer />
+      </Container>
     );
   }
 }
@@ -169,14 +181,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     minHeight: 80,
-    marginVertical: 5,
+    marginVertical: 3,
     padding: 5,
     paddingLeft: 12,
   },
   button: {
     padding: 12,
     paddingHorizontal: 15,
-    borderRadius: 15,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 6,

@@ -15,8 +15,8 @@ class SectionList extends Component {
           paddingLeft: 15,
           marginBottom: 5,
         }}>
-        <Text bold={true}>{item.name}</Text>
-        <Text bold={true} font={16}>
+        <Text bold={true} color = {'#000000'} font = {16}>{item.name}</Text>
+        <Text bold={true} color = {'#000000'} font={14}>
           {item.description}
         </Text>
       </TouchableOpacity>
