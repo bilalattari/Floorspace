@@ -13,17 +13,11 @@ import {themeColor, pinkColor} from '../Constant/index';
 import Text from './Text';
 export default Footer = ({}) => (
   <View style={styles.footerView}>
-    <Image
-      source={require('../assets/home.png')}
-      style={styles.imageIcon}
-    />
-    <Image
-      source={require('../assets/filter.png')}
-      style={styles.imageIcon}
-    />
-    <TouchableOpacity style={styles.middleButton}>
+    <Image source={require('../assets/home.png')} style={styles.imageIcon} />
+    <Image source={require('../assets/filter.png')} style={styles.imageIcon} />
+    <TouchableOpacity style={styles.imageIcon}>
       <Icon
-        type = {'font-awesome'}
+        type={'font-awesome'}
         name={'plus'}
         color={'#000'}
         containerStyle={{paddingTop: 3}}
@@ -33,10 +27,7 @@ export default Footer = ({}) => (
       source={require('../assets/slideshow.png')}
       style={styles.imageIcon}
     />
-    <Image
-      source={require('../assets/trash.png')}
-      style={styles.imageIcon}
-    />
+    <Image source={require('../assets/trash.png')} style={styles.imageIcon} />
   </View>
 );
 
@@ -54,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  imageIcon : {height: 25, width: 25, resizeMode: 'contain'},
+  imageIcon: {height: 25, width: 25, resizeMode: 'contain'},
   middleButton: {
     marginTop: -41,
     height: 50,

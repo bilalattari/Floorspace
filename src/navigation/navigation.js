@@ -12,8 +12,10 @@ import Products from '../screens/Products';
 import Addproducts from '../screens/Addproduct';
 import Checklist from '../screens/Checklist';
 import Profile from '../screens/Profile';
-import RoomOverview from '../screens/RoomOverview'
+import RoomOverview from '../screens/RoomOverview';
 import ProjectFiles from '../screens/ProjectFiles';
+import Estimate from '../screens/Etimate';
+import EstimateOverView from '../screens/ShowEstimate';
 const SplashStack = createStackNavigator(
   {
     Splash: {
@@ -50,6 +52,12 @@ const AppStack = createStackNavigator(
     Checklist: {
       screen: Checklist,
     },
+    EstimateOverView: {
+      screen: EstimateOverView,
+    },
+    Estimate: {
+      screen: Estimate,
+    },
     AddLabor: {
       screen: AddLabor,
     },
@@ -65,7 +73,6 @@ const AppStack = createStackNavigator(
     RoomOverview: {
       screen: RoomOverview,
     },
-    
   },
   {initialRouteName: 'Checklist', headerMode: null},
 );

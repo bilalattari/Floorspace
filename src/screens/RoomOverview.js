@@ -81,7 +81,6 @@ class RoomOverview extends Component {
             rightText={'39.42spm'}
             backgroundColor={'#F1F1F1'}
           />
-
           <FlatList
             data={checkList}
             keyExtractor={(item, index) => `${index}`}

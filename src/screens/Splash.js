@@ -10,7 +10,7 @@ function SplashScreen({navigation}) {
 
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('RoomOverview');
+      navigation.navigate('EstimateOverView');
     }, 1000);
   }, []);
   return (
