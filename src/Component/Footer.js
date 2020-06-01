@@ -15,7 +15,7 @@ export default Footer = ({}) => (
   <View style={styles.footerView}>
     <Image source={require('../assets/home.png')} style={styles.imageIcon} />
     <Image source={require('../assets/filter.png')} style={styles.imageIcon} />
-    <TouchableOpacity style={styles.imageIcon}>
+    <TouchableOpacity style={styles.middleButton}>
       <Icon
         type={'font-awesome'}
         name={'plus'}

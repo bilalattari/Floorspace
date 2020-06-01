@@ -74,7 +74,7 @@ const AppStack = createStackNavigator(
       screen: RoomOverview,
     },
   },
-  {initialRouteName: 'Checklist', headerMode: null},
+  {initialRouteName: 'Home', headerMode: null},
 );
 
 const App = createSwitchNavigator({

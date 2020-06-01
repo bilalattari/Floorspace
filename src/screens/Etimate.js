@@ -24,8 +24,15 @@ class EstimateOverView extends Component {
       images: [],
     };
   }
-
- 
+  detailView = () => (
+    <Block justify={'flex-end'}>
+      <View style={styles.detailView}>
+        <Text bold={false} font={16}>
+          39.43m
+        </Text>
+      </View>
+    </Block>
+  );
   render() {
     let {navigation} = this.props;
     let {checkList, images, openDetail} = this.state;
@@ -39,7 +46,7 @@ class EstimateOverView extends Component {
             onPress: () => navigation.navigate('Home'),
           }}
           centerComponent={{
-            text: 'Estimate',
+            text: 'Room Overview',
             style: styles.headerTitle,
           }}
           rightComponent={
@@ -61,18 +68,170 @@ class EstimateOverView extends Component {
           containerStyle={styles.headerContainer}
         />
         <ScrollView>
-          <Row
-            leftText={'Total Area'}
-            rightText={'39.42spm'}
-            backgroundColor={'#F1F1F1'}
+          <FlatList
+            data={checkList}
+            keyExtractor={(item, index) => `${index}`}
+            renderItem={({item, index}) => {
+              return (
+                <View>
+                  <View style={styles.loungeView}>
+                    <Text bold={false}>{item}</Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        if (openDetail === index) {
+                          this.setState({openDetail: null});
+                        } else {
+                          this.setState({openDetail: index});
+                        }
+                      }}
+                      style={styles.loungeViewButton}>
+                      <Icon
+                        type={'font-awesome'}
+                        name={openDetail === index ? 'angle-up' : 'angle-down'}
+                        color={'#fff'}
+                        iconStyle={{
+                          paddingBottom: openDetail === index ? 4 : null,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  {openDetail === index && (
+                    <View style={{marginBottom: 85}}>
+                      <Row leftText={'Area :'} rightText={'39.43m'} />
+                      <Row leftText={'Perimeter'} rightText={'28.5m'} />
+                      <Row
+                        leftText={'Perimeter less doors'}
+                        rightText={'28.42spm'}
+                      />
+                      <View style={{padding: 12}}>
+                        <Block direction={'row'} style={{marginVertical: 5}}>
+                          <Block>
+                            <FPicker
+                              pickerItems={['Concrete']}
+                              selectedValue={'Concrete'}
+                              header={'Subfloor'}
+                              onChange={() => console.log()}
+                            />
+                          </Block>
+                          {this.detailView()}
+                          <View style={styles.plusView}>
+                            <TouchableOpacity style={styles.plusButton}>
+                              <Icon type={'feather'} name={'plus'} />
+                            </TouchableOpacity>
+                          </View>
+                        </Block>
+                        <Block direction={'row'} style={{marginVertical: 5}}>
+                          <Block>
+                            <FPicker
+                              pickerItems={['Take up carpet']}
+                              selectedValue={'Take up carpet'}
+                              header={'Take Up'}
+                              onChange={() => console.log()}
+                            />
+                          </Block>
+                          {this.detailView()}
+                          <View style={styles.plusView}>
+                            <TouchableOpacity style={styles.plusButton}>
+                              <Icon type={'feather'} name={'plus'} />
+                            </TouchableOpacity>
+                          </View>
+                        </Block>
+                        <Block
+                          direction={'row'}
+                          style={{marginVertical: 10, marginHorizontal: -7}}>
+                          <Block>
+                            <FPicker
+                              pickerItems={['Standard Install']}
+                              selectedValue={'Standard Install'}
+                              header={'New Flooring'}
+                              onChange={() => console.log()}
+                            />
+                          </Block>
+                        </Block>
+                        <Block direction={'row'} style={{marginHorizontal: -1}}>
+                          <Block style={{flex: 1.7}}>
+                            <FPicker
+                              pickerItems={['Vinley Eco Durable']}
+                              selectedValue={'Vinley Eco Durable'}
+                              onChange={() => console.log()}
+                            />
+                          </Block>
+                          <Block>
+                            <FPicker
+                              pickerItems={['Colour']}
+                              selectedValue={'Colour'}
+                              onChange={() => console.log()}
+                            />
+                          </Block>
+                        </Block>
+                        <Block direction={'row'} style={{marginVertical: 5}}>
+                          <Block>
+                            <FPicker
+                              pickerItems={['None']}
+                              selectedValue={'None'}
+                              header={'Underlay'}
+                              onChange={() => console.log()}
+                            />
+                          </Block>
+                          {this.detailView()}
+                          <View style={styles.plusView}>
+                            <TouchableOpacity style={styles.plusButton}>
+                              <Icon type={'feather'} name={'plus'} />
+                            </TouchableOpacity>
+                          </View>
+                        </Block>
+                        <Block direction={'row'} style={{marginVertical: 5}}>
+                          <Block>
+                            <FPicker
+                              pickerItems={['None']}
+                              selectedValue={'None'}
+                              header={'Floor Prep'}
+                              onChange={() => console.log()}
+                            />
+                          </Block>
+                          {this.detailView()}
+                          <View style={styles.plusView}>
+                            <TouchableOpacity style={styles.plusButton}>
+                              <Icon type={'feather'} name={'plus'} />
+                            </TouchableOpacity>
+                          </View>
+                        </Block>
+                        <Block direction={'row'} style={{marginVertical: 5}}>
+                          <Block>
+                            <FPicker
+                              pickerItems={['Take up carpet']}
+                              selectedValue={'Take up carpet'}
+                              header={'Take Up'}
+                              onChange={() => console.log()}
+                            />
+                          </Block>
+                          {this.detailView()}
+                          <View style={styles.plusView}>
+                            <TouchableOpacity style={styles.plusButton}>
+                              <Icon type={'feather'} name={'plus'} />
+                            </TouchableOpacity>
+                          </View>
+                        </Block>
+                      </View>
+
+                      <Row
+                        leftText={'Set all rooms the same'}
+                        switchBtn={true}
+                      />
+                    
+                      <Row leftBold={true} leftText={'Coving'} />
+                      <Row leftBold={true} leftText={'Rotate'} />
+                      <Row leftBold={true} leftText={'Resize'} />
+                      <Row leftBold={true} leftText={'Flip Horizontal'} />
+                      <Row leftBold={true} leftText={'Flip Vertical'} />
+                      <Row leftBold={true} leftText={'Reopen to draw'} />
+                      <Row leftBold={true} leftText={'Delete'} />
+                    </View>
+                  )}
+                </View>
+              );
+            }}
           />
-          <Row leftBold={true} leftText={'Coving'} />
-          <Row leftBold={true} leftText={'Rotate'} />
-          <Row leftBold={true} leftText={'Resize'} />
-          <Row leftBold={true} leftText={'Flip Horizontal'} />
-          <Row leftBold={true} leftText={'Flip Vertical'} />
-          <Row leftBold={true} leftText={'Reopen to draw'} />
-          <Row leftBold={true} leftText={'Delete'} />
         </ScrollView>
       </SafeAreaView>
     );

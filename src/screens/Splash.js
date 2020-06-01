@@ -10,7 +10,7 @@ function SplashScreen({navigation}) {
 
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('EstimateOverView');
+      navigation.navigate('Home');
     }, 1000);
   }, []);
   return (

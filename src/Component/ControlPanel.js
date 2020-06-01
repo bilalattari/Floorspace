@@ -15,6 +15,7 @@ let menuItems = [
   {name: 'Products', navigate: 'Products'},
   {name: 'Suppliers', navigate: 'Supplier'},
   {name: 'Labour', navigate: 'Labours'},
+  {name: 'Estimate', navigate: 'Estimate'},
   {name: 'Sub-contractors', navigate: ''},
   {name: 'Analytics', navigate: ''},
 ];

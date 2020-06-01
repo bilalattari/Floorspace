@@ -25,6 +25,13 @@ class EstimateOverView extends Component {
     };
   }
 
+  percentage = (perc) => (
+    <View style={styles.percentage}>
+      <Text bold={true} font={13}>
+        {perc}
+      </Text>
+    </View>
+  );
   render() {
     let {navigation} = this.props;
     let {checkList, images, openDetail} = this.state;
@@ -59,10 +66,10 @@ class EstimateOverView extends Component {
           }
           containerStyle={styles.headerContainer}
         />
-        <ScrollView>
+        <ScrollView style={{marginBottom: 85}}>
           <Row
             leftText={'Layout Direction'}
-            backgroundColor={undefined}
+            backgroundColor={'#F1F1F1'}
             leftBold={true}
           />
           <Row
@@ -87,13 +94,40 @@ class EstimateOverView extends Component {
               <Icon type={'feather'} name={'arrow-down'} color={'#fff'} />
             </TouchableOpacity>
           </Row>
-          <Row leftBold={true} leftText={'Coving'} />
-          <Row leftBold={true} leftText={'Rotate'} />
-          <Row leftBold={true} leftText={'Resize'} />
-          <Row leftBold={true} leftText={'Flip Horizontal'} />
-          <Row leftBold={true} leftText={'Flip Vertical'} />
-          <Row leftBold={true} leftText={'Reopen to draw'} />
-          <Row leftBold={true} leftText={'Delete'} />
+          <Row
+            leftText={'Wastage'}
+            backgroundColor={'#F1F1F1'}
+            leftBold={true}
+          />
+          <Row leftBold={true} leftText={'Weld'}>
+            {this.percentage('20%')}
+          </Row>
+          <Row leftBold={true} leftText={'Trims'}>
+            {this.percentage('10%')}
+          </Row>
+          <Row leftBold={true} leftText={'Box Product'}>
+            {this.percentage('10%')}
+          </Row>
+          <Row
+            leftText={'Roll Products'}
+            backgroundColor={'#F1F1F1'}
+            leftBold={true}
+          />
+          <Row leftBold={true} leftText={'Cut Margin'}>
+            {this.percentage('0.10')}
+          </Row>
+          <Row leftBold={true} leftText={'Cut Round Up'}>
+            {this.percentage('0.10')}
+          </Row>
+          <Row leftBold={true} leftText={'Max Cross Joins'}>
+            {this.percentage('1')}
+          </Row>
+          <Row leftBold={true} leftText={'Add Cross Join'} />
+          <Row leftBold={true} leftText={'Add Evan Cross Join'} />
+          <Row leftBold={true} leftText={'Move All Joins'} />
+          <Row leftBold={true} leftText={'Move Individual Join'} />
+          <Row leftBold={true} leftText={'Delete Join'} />
+          <Row leftBold={true} leftText={'Cut Sheet'} />
         </ScrollView>
       </SafeAreaView>
     );
@@ -104,6 +138,14 @@ const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: '#12B3B4',
     justifyContent: 'space-around',
+  },
+  percentage: {
+    height: 30,
+    width: 40,
+    marginRight: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F1F1F1',
   },
   plusButton: {
     height: 35,
