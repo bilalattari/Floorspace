@@ -14,7 +14,7 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native-gesture-handler';
-class Checklist extends Component {
+class RoomOverview extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,7 +54,7 @@ class Checklist extends Component {
             onPress: () => navigation.navigate('Home'),
           }}
           centerComponent={{
-            text: 'Checklist',
+            text: 'Room Overview',
             style: styles.headerTitle,
           }}
           rightComponent={
@@ -81,6 +81,7 @@ class Checklist extends Component {
             rightText={'39.42spm'}
             backgroundColor={'#F1F1F1'}
           />
+
           <FlatList
             data={checkList}
             keyExtractor={(item, index) => `${index}`}
@@ -231,102 +232,29 @@ class Checklist extends Component {
                         leftText={'Set all rooms the same'}
                         switchBtn={true}
                       />
-                      <View style={{padding: 12}}>
-                        <RoundBtn
-                          onSelect={(e) => this.setState({flag: e})}
-                          heading={'Onsite Power'}
-                          btn={this.state.btn}
-                        />
-                        <RoundBtn
-                          onSelect={(e) => this.setState({flag: e})}
-                          heading={'Occupied'}
-                          btn={this.state.btn}
-                        />
-                        <Block direction={'row'} style={{marginVertical: 5}}>
-                          <Block>
-                            <FPicker
-                              pickerItems={['Take up carpet']}
-                              selectedValue={'Take up carpet'}
-                              header={'Take Up'}
-                              onChange={() => console.log()}
-                            />
-                          </Block>
-                          {this.detailView()}
-                          <View style={styles.plusView}>
-                            <TouchableOpacity style={styles.plusButton}>
-                              <Icon type={'feather'} name={'plus'} />
-                            </TouchableOpacity>
-                          </View>
-                        </Block>
-                        <RoundBtn
-                          onSelect={(e) => this.setState({flag: e})}
-                          heading={'Ramping'}
-                          btn={this.state.btn}
-                        />
-                        <RoundBtn
-                          onSelect={(e) => this.setState({flag: e})}
-                          heading={'Trim Door to Fit'}
-                          btn={this.state.btn}
-                        />
-                        <RoundBtn
-                          onSelect={(e) => this.setState({flag: e})}
-                          heading={'Does New Flooring Need to Match Existing?'}
-                          btn={this.state.btn}
-                        />
-                        <CustomInput
-                          marginLeft={5}
-                          title="Best Match"
-                          width="97%"
-                        />
-                        <CustomInput
-                          marginLeft={5}
-                          title="Furniture"
-                          width="97%"
-                        />
-                        <RoundBtn
-                          onSelect={(e) => this.setState({flag: e})}
-                          heading={'Possible Asbestos?'}
-                          btn={this.state.btn}
-                        />
-                        <CustomInput
-                          marginLeft={5}
-                          title="Curving"
-                          width="97%"
-                        />
-                        <CustomInput
-                          marginLeft={5}
-                          title="Mitres"
-                          width="97%"
-                        />
-                        <CustomInput
-                          marginLeft={5}
-                          title="Portable Facilities"
-                          width="97%"
-                        />
-                        <View style={styles.imagePickerView}>
-                          <TouchableOpacity
-                            style={styles.addImageButton}
-                            onPress={this.addImages}>
-                            <Icon
-                              type={'feather'}
-                              name={'plus'}
-                              color={'grey'}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                        {images.map((img, index) => (
-                          <Image
-                            source={{uri: img.path}}
-                            style={{
-                              height: 80,
-                              width: 80,
-                              borderRadius: 5,
-                              margin: 5,
-                              backgroundColor: '#000',
-                            }}
+                      <Row leftBold={true} leftText={'Layout Direction'}>
+                        <TouchableOpacity style={styles.arrowButton}>
+                          <Icon
+                            type={'feather'}
+                            name={'arrow-right'}
+                            color={'#fff'}
                           />
-                        ))}
-                      </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.arrowButton}>
+                          <Icon
+                            type={'feather'}
+                            name={'arrow-down'}
+                            color={'#fff'}
+                          />
+                        </TouchableOpacity>
+                      </Row>
+                      <Row leftBold={true} leftText={'Coving'} />
+                      <Row leftBold={true} leftText={'Rotate'} />
+                      <Row leftBold={true} leftText={'Resize'} />
+                      <Row leftBold={true} leftText={'Flip Horizontal'} />
+                      <Row leftBold={true} leftText={'Flip Vertical'} />
+                      <Row leftBold={true} leftText={'Reopen to draw'} />
+                      <Row leftBold={true} leftText={'Delete'} />
                     </View>
                   )}
                 </View>
@@ -344,6 +272,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#12B3B4',
     justifyContent: 'space-around',
   },
+  plusButton: {
+    height: 35,
+    width: 35,
+    marginBottom: 3,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  arrowButton: {
+    height: 33,
+    width: 60,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
+    marginHorizontal: 3,
+  },
   plusView: {
     width: 45,
     justifyContent: 'flex-end',
@@ -357,35 +303,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  imagePickerView: {
-    height: 200,
-    width: '90%',
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    margin: 12,
-    borderColor: '#ccc',
-    borderWidth: 1,
-  },
-  addImageButton: {
-    height: 80,
-    backgroundColor: '#fff',
-    width: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    margin: 6,
-    borderColor: '#ccc',
-    borderStyle: 'dotted',
-  },
-  plusButton: {
-    height: 35,
-    width: 35,
-    marginBottom: 3,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+
+  undeRedo: {
+    height: 15,
+    resizeMode: 'contain',
+    width: 15,
+    resizeMode: 'contain',
   },
   loungeViewButton: {
     height: 28,
@@ -395,12 +318,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#12B3B4',
-  },
-  undeRedo: {
-    height: 15,
-    resizeMode: 'contain',
-    width: 15,
-    resizeMode: 'contain',
   },
   loungeView: {
     backgroundColor: '#fff',
@@ -419,4 +336,4 @@ const styles = StyleSheet.create({
   headerTitle: {color: '#fff', fontWeight: 'bold', fontSize: 18},
 });
 
-export default Checklist;
+export default RoomOverview;

@@ -16,6 +16,8 @@ export default ProfileRow = ({
   switchBtn,
   backgroundColor,
   toggleSwitch,
+  leftBold,
+  children
 }) => (
   <View
     style={[
@@ -24,10 +26,10 @@ export default ProfileRow = ({
         backgroundColor: backgroundColor ? backgroundColor : '#fff',
       },
     ]}>
-    <Text color={'#1F1C19'} bold={false} font={16}>
+    <Text color={'#1F1C19'} bold={leftBold ? true : false} font={16}>
       {leftText}
     </Text>
-    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
       {rightText && (
         <Text color={'#1F1C19'} bold={false} font={16}>
           {rightText}
@@ -51,7 +53,8 @@ export default ProfileRow = ({
           value={true}
         />
       )}
-    </TouchableOpacity>
+      {children}
+    </View>
   </View>
 );
 
