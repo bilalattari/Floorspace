@@ -6,11 +6,16 @@ import Text from './Text';
 export default CustomInput = (props) => (
   <View
     style={{
-      width: '88%',
+      width: props.width ? props.width : '88%',
       marginTop: props.title ? 12 : 3,
       alignSelf: 'center',
+      marginLeft: props.marginLeft,
     }}>
-    {props.title ? <Text font={15} bold = {true}>{props.title}</Text> : null}
+    {props.title ? (
+      <Text style={{marginLeft: 5}} font={15} bold={false}>
+        {props.title}
+      </Text>
+    ) : null}
     <TextInput
       style={[
         {
@@ -18,8 +23,8 @@ export default CustomInput = (props) => (
           backgroundColor: '#fff',
           width: '100%',
           paddingLeft: 12,
-          fontWeight : 'bold',
-          fontFamily : 'OpenSans-SemiBold'
+          fontWeight: 'bold',
+          fontFamily: 'OpenSans-SemiBold',
         },
         props.customStyle,
       ]}

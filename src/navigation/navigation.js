@@ -10,9 +10,9 @@ import Labours from '../screens/Labours';
 import AddLabor from '../screens/Addlabor';
 import Products from '../screens/Products';
 import Addproducts from '../screens/Addproduct';
-import Checklist from '../screens/Checklist'
+import Checklist from '../screens/Checklist';
 import Profile from '../screens/Profile';
-import ProjectFiles from '../screens/ProjectFiles'
+import ProjectFiles from '../screens/ProjectFiles';
 const SplashStack = createStackNavigator(
   {
     Splash: {
@@ -61,9 +61,8 @@ const AppStack = createStackNavigator(
     ProjectFiles: {
       screen: ProjectFiles,
     },
-    
   },
-  {initialRouteName: 'Home', headerMode: null},
+  {initialRouteName: 'Checklist', headerMode: null},
 );
 
 const App = createSwitchNavigator({

@@ -1,10 +1,12 @@
 import React, {useState, useEffect, Component} from 'react';
-import {StyleSheet, View, SafeAreaView, Image} from 'react-native';
+import {StyleSheet, View, SafeAreaView, Switch, Image} from 'react-native';
 import {Header, Icon} from 'react-native-elements';
 import Text from '../Component/Text';
 import Row from '../Component/ProfileRow';
 import FPicker from '../Component/Picker';
 import Block from '../Component/Block';
+import RoundBtn from '../Component/RoundBtn';
+import CustomInput from '../Component/Input';
 import {
   TouchableOpacity,
   FlatList,
@@ -15,14 +17,15 @@ class Checklist extends Component {
     super(props);
     this.state = {
       // checkList: ['Room', 'Bedroom', 'Loungr'],
-      checkList: ['Room'],
+      checkList: ['Lounge'],
+      btn: 'on',
     };
   }
 
   detailView = () => (
     <Block justify={'flex-end'}>
       <View style={styles.detailView}>
-        <Text bold={true} font={16}>
+        <Text bold={false} font={16}>
           39.43m
         </Text>
       </View>
@@ -76,7 +79,7 @@ class Checklist extends Component {
               return (
                 <View>
                   <View style={styles.loungeView}>
-                    <Text bold={true}>{item}</Text>
+                    <Text bold={false}>{item}</Text>
                     <TouchableOpacity style={styles.loungeViewButton}>
                       <Icon
                         type={'font-awesome'}
@@ -85,7 +88,7 @@ class Checklist extends Component {
                       />
                     </TouchableOpacity>
                   </View>
-                  <View>
+                  <View style={{marginBottom: 85}}>
                     <Row leftText={'Area :'} rightText={'39.43m'} />
                     <Row leftText={'Perimeter'} rightText={'28.5m'} />
                     <Row
@@ -125,7 +128,9 @@ class Checklist extends Component {
                           </TouchableOpacity>
                         </View>
                       </Block>
-                      <Block direction={'row'} style={{marginVertical: 5}}>
+                      <Block
+                        direction={'row'}
+                        style={{marginVertical: 10, marginHorizontal: -7}}>
                         <Block>
                           <FPicker
                             pickerItems={['Standard Install']}
@@ -135,8 +140,8 @@ class Checklist extends Component {
                           />
                         </Block>
                       </Block>
-                      <Block direction={'row'}>
-                        <Block>
+                      <Block direction={'row'} style={{marginHorizontal: -1}}>
+                        <Block style={{flex: 1.7}}>
                           <FPicker
                             pickerItems={['Vinley Eco Durable']}
                             selectedValue={'Vinley Eco Durable'}
@@ -150,6 +155,38 @@ class Checklist extends Component {
                             onChange={() => console.log()}
                           />
                         </Block>
+                      </Block>
+                      <Block direction={'row'} style={{marginVertical: 5}}>
+                        <Block>
+                          <FPicker
+                            pickerItems={['None']}
+                            selectedValue={'None'}
+                            header={'Underlay'}
+                            onChange={() => console.log()}
+                          />
+                        </Block>
+                        {this.detailView()}
+                        <View style={styles.plusView}>
+                          <TouchableOpacity style={styles.plusButton}>
+                            <Icon type={'feather'} name={'plus'} />
+                          </TouchableOpacity>
+                        </View>
+                      </Block>
+                      <Block direction={'row'} style={{marginVertical: 5}}>
+                        <Block>
+                          <FPicker
+                            pickerItems={['None']}
+                            selectedValue={'None'}
+                            header={'Floor Prep'}
+                            onChange={() => console.log()}
+                          />
+                        </Block>
+                        {this.detailView()}
+                        <View style={styles.plusView}>
+                          <TouchableOpacity style={styles.plusButton}>
+                            <Icon type={'feather'} name={'plus'} />
+                          </TouchableOpacity>
+                        </View>
                       </Block>
                       <Block direction={'row'} style={{marginVertical: 5}}>
                         <Block>
@@ -168,6 +205,73 @@ class Checklist extends Component {
                         </View>
                       </Block>
                     </View>
+
+                    <Row leftText={'Set all rooms the same'} switchBtn={true} />
+                    <View style={{padding: 12}}>
+                      <RoundBtn
+                        onSelect={(e) => this.setState({flag: e})}
+                        heading={'Onsite Power'}
+                        btn={this.state.btn}
+                      />
+                      <RoundBtn
+                        onSelect={(e) => this.setState({flag: e})}
+                        heading={'Occupied'}
+                        btn={this.state.btn}
+                      />
+                      <Block direction={'row'} style={{marginVertical: 5}}>
+                        <Block>
+                          <FPicker
+                            pickerItems={['Take up carpet']}
+                            selectedValue={'Take up carpet'}
+                            header={'Take Up'}
+                            onChange={() => console.log()}
+                          />
+                        </Block>
+                        {this.detailView()}
+                        <View style={styles.plusView}>
+                          <TouchableOpacity style={styles.plusButton}>
+                            <Icon type={'feather'} name={'plus'} />
+                          </TouchableOpacity>
+                        </View>
+                      </Block>
+                      <RoundBtn
+                        onSelect={(e) => this.setState({flag: e})}
+                        heading={'Ramping'}
+                        btn={this.state.btn}
+                      />
+                      <RoundBtn
+                        onSelect={(e) => this.setState({flag: e})}
+                        heading={'Trim Door to Fit'}
+                        btn={this.state.btn}
+                      />
+                      <RoundBtn
+                        onSelect={(e) => this.setState({flag: e})}
+                        heading={'Does New Flooring Need to Match Existing?'}
+                        btn={this.state.btn}
+                      />
+                      <CustomInput
+                        marginLeft={5}
+                        title="Best Match"
+                        width="97%"
+                      />
+                      <CustomInput
+                        marginLeft={5}
+                        title="Furniture"
+                        width="97%"
+                      />
+                      <RoundBtn
+                        onSelect={(e) => this.setState({flag: e})}
+                        heading={'Possible Asbestos?'}
+                        btn={this.state.btn}
+                      />
+                      <CustomInput marginLeft={5} title="Curving" width="97%" />
+                      <CustomInput marginLeft={5} title="Mitres" width="97%" />
+                      <CustomInput
+                        marginLeft={5}
+                        title="Portable Facilities"
+                        width="97%"
+                      />
+                    </View>
                   </View>
                 </View>
               );
@@ -185,9 +289,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   plusView: {
-    width: 60,
+    width: 45,
     justifyContent: 'flex-end',
     alignItems: 'center',
+    marginLeft: 5,
   },
   detailView: {
     backgroundColor: '#fff',
@@ -225,7 +330,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 21,
+    paddingHorizontal: 10,
     alignItems: 'center',
   },
   customRightComponent: {

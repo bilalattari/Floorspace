@@ -9,9 +9,9 @@ function SplashScreen({navigation}) {
   const [user, setUser] = useState();
 
   useEffect(() => {
-      setTimeout(() => {
-          navigation.navigate('Home')
-      }, 1000)
+    setTimeout(() => {
+      navigation.navigate('Checklist');
+    }, 1000);
   }, []);
   return (
     <View style={styles.container}>
