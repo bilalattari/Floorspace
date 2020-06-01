@@ -5,7 +5,7 @@ import { Icon} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native';
 export default AddButton = (props) => (
   <TouchableOpacity
-    style={{
+    style={[ props.customStyle ? props.customStyle :{
       height: 55,
       width: 55,
       borderRadius: 125,
@@ -16,7 +16,7 @@ export default AddButton = (props) => (
       backgroundColor: '#fff',
       justifyContent: 'center',
       alignItems: 'center',
-    }}
+    }]}
     {...props}>
     <Icon type = {'font-awesome'} name = {'plus'} />
     </TouchableOpacity>

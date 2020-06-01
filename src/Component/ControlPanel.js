@@ -11,7 +11,7 @@ import CustomText from './Text';
 let menuItems = [
   {name: 'Leads & Projects', navigate: ''},
   {name: 'Account Settings', navigate: 'Profile'},
-  {name: 'Customize Project Files', navigate: ''},
+  {name: 'Customize Project Files', navigate: 'ProjectFiles'},
   {name: 'Products', navigate: 'Products'},
   {name: 'Suppliers', navigate: 'Supplier'},
   {name: 'Labour', navigate: 'Labours'},
@@ -36,8 +36,8 @@ export default class ControlPanel extends Component {
       <ScrollView style={styles.menu}>
         <View style={styles.imageContainer}>
           <Image
-            source={require('../assets/avatar.png')}
-            style={{height: 70, width: 70}}
+            source={require('../assets/avatar.jpg')}
+            style={{height: 70, width: 70 , borderRadius : 125}}
           />
           <View style={{paddingLeft: 18}}>
             <CustomText text={'Andrew Owen'} color={'#fff'} />

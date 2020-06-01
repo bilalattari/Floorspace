@@ -3,8 +3,12 @@ import {Icon} from 'react-native-elements';
 import {themeColor} from '../Constant';
 import {TextInput, View, TouchableOpacity, StyleSheet} from 'react-native';
 import Text from './Text';
-export default ProfileRow = ({leftText, rightText, icon}) => (
-  <View style={styles.rowDive}>
+export default ProfileRow = ({leftText, rightText, icon, backgroundColor}) => (
+  <View
+    style={[
+      styles.rowDive,
+      {backgroundColor: backgroundColor ? backgroundColor : '#fff'},
+    ]}>
     <Text color={'#1F1C19'} bold={true} font={16}>
       {leftText}
     </Text>

@@ -34,7 +34,7 @@ const List = [
     createdTime: '10:54 am',
     modified: '03/ 01/ 2020',
     modifiedTime: '11:54 pm',
-    status: 'Not Interesr',
+    status: 'Not Interested',
   },
   {
     name: 'Jon Jones',
@@ -61,7 +61,7 @@ const List = [
     createdTime: '10:54 am',
     modified: '03/ 01/ 2020',
     modifiedTime: '11:54 pm',
-    status: 'Not Interesr',
+    status: 'Not Interested',
   },
   {
     name: 'Jon Jones',
@@ -88,7 +88,7 @@ const List = [
     createdTime: '10:54 am',
     modified: '03/ 01/ 2020',
     modifiedTime: '11:54 pm',
-    status: 'Not Interesr',
+    status: 'Not Interested',
   },
 ];
 
@@ -105,8 +105,8 @@ class Home extends Component {
     return (
       <Container
         navigation={navigation}
-        value = {this.state.search}
-        cancel = {()=> this.setState({search : ""})}
+        value={this.state.search}
+        cancel={() => this.setState({search: ''})}
         onChangeText={(text) => this.setState({search: text})}>
         <ScrollView>
           <Text
@@ -154,12 +154,13 @@ class Home extends Component {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <Image
-                    source={require('../assets/dots.png')}
-                    height={20}
-                    style={{paddingHorizontal: 8}}
-                    resizeMode={'contain'}
+                  <Icon
+                    type={'entypo'}
+                    name={'dots-two-vertical'}
+                    size={25}
+                    color={'black'}
                   />
+               
                 </TouchableOpacity>
               </View>
             )}

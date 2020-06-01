@@ -44,7 +44,7 @@ export default class Header extends Component {
             <CustomText text={heading} bold={true} />
             <TouchableOpacity>
               <Image
-                source={require('../assets/avatar.png')}
+                source={require('../assets/avatar.jpg')}
                 style={styles.avatar}
               />
             </TouchableOpacity>
@@ -92,5 +92,5 @@ const styles = StyleSheet.create({
   },
 
   menu: {height: 40, width: 40, resizeMode: 'contain'},
-  avatar: {height: 50, width: 50, resizeMode: 'contain'},
+  avatar: {height: 50, width: 50 , borderRadius : 125 , },
 });

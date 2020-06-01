@@ -10,8 +10,9 @@ import Labours from '../screens/Labours';
 import AddLabor from '../screens/Addlabor';
 import Products from '../screens/Products';
 import Addproducts from '../screens/Addproduct';
+import Checklist from '../screens/Checklist'
 import Profile from '../screens/Profile';
-
+import ProjectFiles from '../screens/ProjectFiles'
 const SplashStack = createStackNavigator(
   {
     Splash: {
@@ -45,6 +46,9 @@ const AppStack = createStackNavigator(
     Products: {
       screen: Products,
     },
+    Checklist: {
+      screen: Checklist,
+    },
     AddLabor: {
       screen: AddLabor,
     },
@@ -54,6 +58,10 @@ const AppStack = createStackNavigator(
     Profile: {
       screen: Profile,
     },
+    ProjectFiles: {
+      screen: ProjectFiles,
+    },
+    
   },
   {initialRouteName: 'Home', headerMode: null},
 );
