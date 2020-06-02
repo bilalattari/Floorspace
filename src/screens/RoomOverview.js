@@ -88,7 +88,7 @@ class RoomOverview extends Component {
               return (
                 <View>
                   <View style={styles.loungeView}>
-                    <Text bold={false}>{item}</Text>
+                    <Text bold={true}>{item}</Text>
                     <TouchableOpacity
                       onPress={() => {
                         if (openDetail === index) {
@@ -109,10 +109,19 @@ class RoomOverview extends Component {
                     </TouchableOpacity>
                   </View>
                   {openDetail === index && (
-                    <View style={{marginBottom: 85}}>
-                      <Row leftText={'Area :'} rightText={'39.43m'} />
-                      <Row leftText={'Perimeter'} rightText={'28.5m'} />
+                    <View style={{marginBottom: 33}}>
                       <Row
+                        leftBold={true}
+                        leftText={'Area :'}
+                        rightText={'39.43m'}
+                      />
+                      <Row
+                        leftBold={true}
+                        leftText={'Perimeter'}
+                        rightText={'28.5m'}
+                      />
+                      <Row
+                        leftBold={true}
                         leftText={'Perimeter less doors'}
                         rightText={'28.42spm'}
                       />
@@ -228,6 +237,7 @@ class RoomOverview extends Component {
                       </View>
 
                       <Row
+                        leftBold={true}
                         leftText={'Set all rooms the same'}
                         switchBtn={true}
                       />

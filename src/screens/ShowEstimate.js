@@ -34,7 +34,6 @@ class EstimateOverView extends Component {
   );
   render() {
     let {navigation} = this.props;
-    let {checkList, images, openDetail} = this.state;
     let type = navigation.getParam('type');
     return (
       <SafeAreaView>
@@ -42,7 +41,7 @@ class EstimateOverView extends Component {
           leftComponent={{
             icon: 'close',
             color: '#fff',
-            onPress: () => navigation.navigate('Home'),
+            onPress: () => navigation.navigate('RoomOverview'),
           }}
           centerComponent={{
             text: 'Estimate',

@@ -88,7 +88,10 @@ class Checklist extends Component {
               return (
                 <View>
                   <View style={styles.loungeView}>
-                    <Text bold={false}>{item}</Text>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate('EstimateDrawn')}>
+                      <Text bold={true}>{item}</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => {
                         if (openDetail === index) {
@@ -110,9 +113,9 @@ class Checklist extends Component {
                   </View>
                   {openDetail === index && (
                     <View style={{marginBottom: 85}}>
-                      <Row leftText={'Area :'} rightText={'39.43m'} />
-                      <Row leftText={'Perimeter'} rightText={'28.5m'} />
-                      <Row
+                      <Row leftBold = {true} leftText={'Area :'} rightText={'39.43m'} />
+                      <Row leftBold = {true} leftText={'Perimeter'} rightText={'28.5m'} />
+                      <Row leftBold = {true}
                         leftText={'Perimeter less doors'}
                         rightText={'28.42spm'}
                       />

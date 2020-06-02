@@ -15,6 +15,7 @@ import Profile from '../screens/Profile';
 import RoomOverview from '../screens/RoomOverview';
 import ProjectFiles from '../screens/ProjectFiles';
 import Estimate from '../screens/Etimate';
+import EstimateDrawn from '../screens/EstimateDrawn';
 import EstimateOverView from '../screens/ShowEstimate';
 const SplashStack = createStackNavigator(
   {
@@ -45,6 +46,9 @@ const AppStack = createStackNavigator(
     },
     Labours: {
       screen: Labours,
+    },
+    EstimateDrawn: {
+      screen: EstimateDrawn,
     },
     Products: {
       screen: Products,

@@ -6,7 +6,7 @@ import {Icon} from 'react-native-elements';
 export default FPicker = ({pickerItems, selectedValue, onChange, header}) => (
   <View style={styles.PickerView}>
     {header && (
-      <Text text={header} bold={false} font={16} style={{padding: 1}} />
+      <Text text={header} bold={true} font={16} style={{padding: 1}} />
     )}
     <Icon
       type={'font-awesome'}
