@@ -14,6 +14,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.5.0",
     "@react-navigation/stack": "^5.2.11",
+    "@terrylinla/react-native-sketch-canvas": "^0.8.0",
     "native-base": "^2.13.12",
     "react": "16.11.0",
     "react-native": "0.62.2",
@@ -28,6 +29,7 @@
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.8.0",
+    "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.3.7",
     "react-navigation-stack": "^2.3.12"

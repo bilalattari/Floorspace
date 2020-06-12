@@ -113,9 +113,18 @@ class Checklist extends Component {
                   </View>
                   {openDetail === index && (
                     <View style={{marginBottom: 85}}>
-                      <Row leftBold = {true} leftText={'Area :'} rightText={'39.43m'} />
-                      <Row leftBold = {true} leftText={'Perimeter'} rightText={'28.5m'} />
-                      <Row leftBold = {true}
+                      <Row
+                        leftBold={true}
+                        leftText={'Area :'}
+                        rightText={'39.43m'}
+                      />
+                      <Row
+                        leftBold={true}
+                        leftText={'Perimeter'}
+                        rightText={'28.5m'}
+                      />
+                      <Row
+                        leftBold={true}
                         leftText={'Perimeter less doors'}
                         rightText={'28.42spm'}
                       />

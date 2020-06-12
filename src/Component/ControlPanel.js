@@ -11,6 +11,7 @@ import CustomText from './Text';
 let menuItems = [
   {name: 'Leads & Projects', navigate: ''},
   {name: 'Account Settings', navigate: 'Profile'},
+  {name: 'Draw', navigate: 'Draw'},
   {name: 'Customize Project Files', navigate: 'ProjectFiles'},
   {name: 'Products', navigate: 'Products'},
   {name: 'Suppliers', navigate: 'Supplier'},
