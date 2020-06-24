@@ -152,7 +152,7 @@ class DrawImage extends React.Component {
     }
   };
   onPressDrawTool = (name) => {
-    let lines = this.state.linePaths
+    let lines = this.state.linePaths;
     let firstDot = lines[0];
     let lastDot = lines[lines.length - 1];
     let obj = {
@@ -161,7 +161,7 @@ class DrawImage extends React.Component {
       x2: lastDot && lastDot.x2,
       y2: lastDot && lastDot.y2,
     };
-    console.log(obj , 'ovjectttttttttt')
+    console.log(obj, 'ovjectttttttttt');
     lines.push(obj);
     this.handleLinePath(lines);
   };
@@ -266,8 +266,14 @@ class DrawImage extends React.Component {
                 let lastDot = lastLinePaths[lastLinePaths.length - 1];
 
                 let obj = {
-                  x1: lastDot && lastDot.x2 ? `${lastDot.x2}` : crossHairLocation.x,
-                  y1: lastDot && lastDot.y2 ?  `${lastDot.y2}` : crossHairLocation.y,
+                  x1:
+                    lastDot && lastDot.x2
+                      ? `${lastDot.x2}`
+                      : crossHairLocation.x,
+                  y1:
+                    lastDot && lastDot.y2
+                      ? `${lastDot.y2}`
+                      : crossHairLocation.y,
                   x2: splitted1[0],
                   y2: splitted1[1],
                   strokeColor: strokeColor,
@@ -324,7 +330,7 @@ const styles = StyleSheet.create({
   iconButton: {
     position: 'absolute',
     bottom: 0,
-    zIndex : 1200,
+    zIndex: 1200,
     width: '95%',
     alignSelf: 'center',
   },
