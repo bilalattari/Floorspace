@@ -155,15 +155,31 @@ class DrawImage extends React.Component {
     let lines = this.state.linePaths;
     let firstDot = lines[0];
     let lastDot = lines[lines.length - 1];
-    let obj = {
-      x1: firstDot && `${firstDot.x1}`,
-      y1: firstDot && `${firstDot.y1}`,
-      x2: lastDot && lastDot.x2,
-      y2: lastDot && lastDot.y2,
-    };
-    console.log(obj, 'ovjectttttttttt');
-    lines.push(obj);
-    this.handleLinePath(lines);
+    if (name === 'Close Rect') {
+      let closeRect1 = {
+        x1: firstDot && `${firstDot.x1}`,
+        y1: firstDot && firstDot.y1,
+        x2: lastDot && lastDot.x2,
+        y2: lastDot && firstDot.y2,
+      };
+      let closeRect2 = {
+        x1: lastDot && `${lastDot.x2}`,
+        y1: firstDot && firstDot.y1,
+        x2: lastDot && lastDot.x2,
+        y2: lastDot && lastDot.y2,
+      };
+      lines.push(closeRect1, closeRect2);
+      this.handleLinePath(lines);
+    } else {
+      let closeShape = {
+        x1: firstDot && `${firstDot.x1}`,
+        y1: firstDot && `${firstDot.y1}`,
+        x2: lastDot && lastDot.x2,
+        y2: lastDot && lastDot.y2,
+      };
+      lines.push(closeShape);
+      this.handleLinePath(lines);
+    }
   };
   handleStrokeColor = (color) => {
     this.setState({strokeColor: color});
@@ -329,7 +345,7 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 5,
     zIndex: 1200,
     width: '95%',
     alignSelf: 'center',
