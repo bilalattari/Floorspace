@@ -4,7 +4,7 @@ import {Icon} from 'react-native-elements';
 import Text from '../Component/Text';
 import ImagePicker from 'react-native-image-crop-picker';
 import {drawTools} from '../Objects/drawTool';
-import Svg, {Line} from 'react-native-svg';
+import Svg, {Line, Circle} from 'react-native-svg';
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 let header = [
   {name: 'close', type: 'material-community'},
@@ -141,22 +141,29 @@ class DrawImage extends React.Component {
     this.setState({linePaths: arr});
   };
   undo = () => {
-    let {linePaths, redoArr} = this.state;
-    let redoUpdate = redoArr;
-    let linePathsUpdate = linePaths;
-    let pop = linePathsUpdate.pop();
-    redoUpdate.push(pop);
-    this.setState({linePaths: linePathsUpdate, redoArr: redoUpdate});
+    if (this.state.handDraw) {
+      this._canvas.undo();
+    } else {
+      let {linePaths, redoArr} = this.state;
+      let redoUpdate = redoArr;
+      let linePathsUpdate = linePaths;
+      let pop = linePathsUpdate.pop();
+      redoUpdate.push(pop);
+      this.setState({linePaths: linePathsUpdate, redoArr: redoUpdate});
+    }
   };
 
   redo = () => {
-    let {linePaths, redoArr} = this.state;
-    if (redoArr.length > 0) {
-      let redoUpdate = redoArr;
-      let linePathsUpdate = linePaths;
-      let pop = redoUpdate.pop();
-      linePathsUpdate.push(pop);
-      this.setState({linePaths: linePathsUpdate, redoArr: redoUpdate});
+    if (this.state.handDraw) {
+    } else {
+      let {linePaths, redoArr} = this.state;
+      if (redoArr.length > 0) {
+        let redoUpdate = redoArr;
+        let linePathsUpdate = linePaths;
+        let pop = redoUpdate.pop();
+        linePathsUpdate.push(pop);
+        this.setState({linePaths: linePathsUpdate, redoArr: redoUpdate});
+      }
     }
   };
   onPressDrawTool = (name) => {
@@ -168,13 +175,13 @@ class DrawImage extends React.Component {
 
     if (name === 'Close Rect') {
       let closeRect1 = {
-        x1: firstDot && `${firstDot.x1}`,
+        x1: firstDot && firstDot.x1,
         y1: firstDot && firstDot.y1,
         x2: lastDot && lastDot.x2,
         y2: lastDot && firstDot.y2,
       };
       let closeRect2 = {
-        x1: lastDot && `${lastDot.x2}`,
+        x1: lastDot && lastDot.x2,
         y1: firstDot && firstDot.y1,
         x2: lastDot && lastDot.x2,
         y2: lastDot && lastDot.y2,
@@ -207,7 +214,15 @@ class DrawImage extends React.Component {
       this.setState({
         handDraw: !this.state.handDraw,
       });
+    } else if (name === 'Free Draw') {
+      this.setState({
+        handDraw: false,
+      });
+    } else if (name === 'Draw Circle') {
     }
+    this.setState({
+      showFullBottomTools: false,
+    });
   };
   handleStrokeColor = (color) => {
     this.setState({strokeColor: color});
@@ -294,7 +309,6 @@ class DrawImage extends React.Component {
               }}
               ref={(e) => (this._canvas = e)}
               onStrokeStart={(x, y) => {
-                console.log(x, y, 'start');
                 let obj = {
                   x: x,
                   y: y,
@@ -318,11 +332,15 @@ class DrawImage extends React.Component {
                     x2: splitted1[0],
                     y2: splitted1[1],
                     strokeColor: strokeColor,
-                    top: dot?.y2
-                      ? `${dot.y2}` < splitted1[1]
-                      : crossHairLocation.y < splitted1[1],
                   };
-                  console.log('hh===>', obj.top);
+                  let point = {
+                    x: splitted1[0],
+                    y: splitted1[1],
+                  };
+                  this.setState({
+                    crossHairLocation: point,
+                  });
+                  console.log('hh===>', obj.bottom, obj.right);
                   linePaths.push(obj);
                   this.handleLinePath(linePaths);
                   this._canvas.deletePath(paths.path.id);
@@ -330,9 +348,8 @@ class DrawImage extends React.Component {
                   console.log(paths.path.id, 'id');
                 }
               }}
-              // onPathsChange={(paths) => { }}
               strokeColor={strokeColor}
-              strokeWidth={7}
+              strokeWidth={5}
             />
           </View>
         </View>
