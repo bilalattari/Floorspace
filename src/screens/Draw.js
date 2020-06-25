@@ -27,11 +27,13 @@ class DrawImage extends React.Component {
       showFullBottomTools: false,
       redoArr: [],
       strokeColor: '#12B3B4',
+      changeDirection: {falg: false, index: 0},
       crossHairLocation: {
         x: 0,
         y: 0,
       },
       showCrossHairImage: false,
+      handDraw: false,
     };
   }
 
@@ -95,7 +97,9 @@ class DrawImage extends React.Component {
             <>
               <View style={styles.rowView}>
                 {drawTools[1].map((data, index) => (
-                  <TouchableOpacity style={styles.bottomToolsButton}>
+                  <TouchableOpacity
+                    onPress={() => this.onPressDrawTool(data.name)}
+                    style={styles.bottomToolsButton}>
                     <Image source={data.image} />
                     <Text color={'#fff'} font={12} bold={true} align={'center'}>
                       {data.name}
@@ -105,7 +109,9 @@ class DrawImage extends React.Component {
               </View>
               <View style={styles.rowView}>
                 {drawTools[2].map((data, index) => (
-                  <TouchableOpacity style={styles.bottomToolsButton}>
+                  <TouchableOpacity
+                    onPress={() => this.onPressDrawTool(data.name)}
+                    style={styles.bottomToolsButton}>
                     <Image source={data.image} />
                     <Text color={'#fff'} font={12} bold={true} align={'center'}>
                       {data.name}
@@ -115,7 +121,9 @@ class DrawImage extends React.Component {
               </View>
               <View style={styles.rowView}>
                 {drawTools[3].map((data, index) => (
-                  <TouchableOpacity style={styles.bottomToolsButton}>
+                  <TouchableOpacity
+                    onPress={() => this.onPressDrawTool(data.name)}
+                    style={styles.bottomToolsButton}>
                     <Image source={data.image} />
                     <Text color={'#fff'} font={12} bold={true} align={'center'}>
                       {data.name}
@@ -152,9 +160,12 @@ class DrawImage extends React.Component {
     }
   };
   onPressDrawTool = (name) => {
+    let {changeDirection} = this.state;
     let lines = this.state.linePaths;
     let firstDot = lines[0];
     let lastDot = lines[lines.length - 1];
+    console.log(name);
+
     if (name === 'Close Rect') {
       let closeRect1 = {
         x1: firstDot && `${firstDot.x1}`,
@@ -170,7 +181,7 @@ class DrawImage extends React.Component {
       };
       lines.push(closeRect1, closeRect2);
       this.handleLinePath(lines);
-    } else {
+    } else if (name === 'Close Shape') {
       let closeShape = {
         x1: firstDot && `${firstDot.x1}`,
         y1: firstDot && `${firstDot.y1}`,
@@ -179,6 +190,23 @@ class DrawImage extends React.Component {
       };
       lines.push(closeShape);
       this.handleLinePath(lines);
+    } else if (name === 'Change Direction') {
+      let dot = changeDirection.flag ? lines[changeDirection.index] : firstDot;
+      let obj = {
+        x: changeDirection.flag ? dot.x2 : dot.x1,
+        y: changeDirection.flag ? dot.y2 : dot.y1,
+      };
+      this.setState({
+        crossHairLocation: obj,
+        changeDirection: {
+          flag: !changeDirection.flag,
+          index: lines.length - 1,
+        },
+      });
+    } else if (name === 'Hand Draw') {
+      this.setState({
+        handDraw: !this.state.handDraw,
+      });
     }
   };
   handleStrokeColor = (color) => {
@@ -213,7 +241,9 @@ class DrawImage extends React.Component {
       showImage,
       showButtons,
       crossHairLocation,
+      changeDirection,
     } = this.state;
+    console.log('test==>', changeDirection, linePaths.length);
     return (
       <View style={{flex: 1}}>
         {this.header()}
@@ -272,32 +302,33 @@ class DrawImage extends React.Component {
                 this.setState({crossHairLocation: obj});
               }}
               onStrokeEnd={(paths) => {
-                let lastLinePaths = this.state.linePaths;
-                let path = paths.path;
-                let firstPath = path.data[0];
-                let lastPath = path.data[path.data.length - 1];
-                let splitted = firstPath.split(',');
-                let splitted1 = lastPath.split(',');
-
-                let lastDot = lastLinePaths[lastLinePaths.length - 1];
-
-                let obj = {
-                  x1:
-                    lastDot && lastDot.x2
-                      ? `${lastDot.x2}`
-                      : crossHairLocation.x,
-                  y1:
-                    lastDot && lastDot.y2
-                      ? `${lastDot.y2}`
-                      : crossHairLocation.y,
-                  x2: splitted1[0],
-                  y2: splitted1[1],
-                  strokeColor: strokeColor,
-                };
-                linePaths.push(obj);
-                this.handleLinePath(linePaths);
-                this._canvas.clear();
-                // canvas.current.clear();
+                if (!this.state.handDraw) {
+                  let lastLinePaths = this.state.linePaths;
+                  let path = paths.path;
+                  let firstPath = path.data[0];
+                  let lastPath = path.data[path.data.length - 1];
+                  let splitted = firstPath.split(',');
+                  let splitted1 = lastPath.split(',');
+                  let dot = changeDirection.flag
+                    ? lastLinePaths[0]
+                    : lastLinePaths[lastLinePaths.length - 1];
+                  let obj = {
+                    x1: dot?.x2 ? `${dot.x2}` : crossHairLocation.x,
+                    y1: dot?.y2 ? `${dot.y2}` : crossHairLocation.y,
+                    x2: splitted1[0],
+                    y2: splitted1[1],
+                    strokeColor: strokeColor,
+                    top: dot?.y2
+                      ? `${dot.y2}` < splitted1[1]
+                      : crossHairLocation.y < splitted1[1],
+                  };
+                  console.log('hh===>', obj.top);
+                  linePaths.push(obj);
+                  this.handleLinePath(linePaths);
+                  this._canvas.deletePath(paths.path.id);
+                } else {
+                  console.log(paths.path.id, 'id');
+                }
               }}
               // onPathsChange={(paths) => { }}
               strokeColor={strokeColor}
@@ -374,7 +405,7 @@ const styles = StyleSheet.create({
   },
   drawToolView: {
     backgroundColor: '#2D2D2D',
-    borderRadius: 41,
+    borderRadius: 20,
     overflow: 'hidden',
     paddingHorizontal: 12,
   },
