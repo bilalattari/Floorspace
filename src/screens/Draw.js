@@ -6,6 +6,10 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {drawTools} from '../Objects/drawTool';
 import Svg, {Line, Circle} from 'react-native-svg';
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
+import CircleModal from '../Component/CircleModal';
+import MovableView from 'react-native-movable-view';
+import FIcon from 'react-native-vector-icons/FontAwesome';
+
 let header = [
   {name: 'close', type: 'material-community'},
   {name: 'chevron-left', type: 'entypo'},
@@ -27,13 +31,16 @@ class DrawImage extends React.Component {
       showFullBottomTools: false,
       redoArr: [],
       strokeColor: '#12B3B4',
-      changeDirection: {falg: false, index: 0},
+      changeDirection: {flag: false, index: 0},
       crossHairLocation: {
         x: 0,
         y: 0,
       },
       showCrossHairImage: false,
       handDraw: false,
+      strokeStart: false,
+      circleModal: false,
+      circleSize: 20,
     };
   }
 
@@ -171,8 +178,6 @@ class DrawImage extends React.Component {
     let lines = this.state.linePaths;
     let firstDot = lines[0];
     let lastDot = lines[lines.length - 1];
-    console.log(name);
-
     if (name === 'Close Rect') {
       let closeRect1 = {
         x1: firstDot && firstDot.x1,
@@ -198,10 +203,10 @@ class DrawImage extends React.Component {
       lines.push(closeShape);
       this.handleLinePath(lines);
     } else if (name === 'Change Direction') {
-      let dot = changeDirection.flag ? lines[changeDirection.index] : firstDot;
+      let dot = changeDirection.flag ? lines[lines.length - 1] : firstDot;
       let obj = {
-        x: changeDirection.flag ? dot.x2 : dot.x1,
-        y: changeDirection.flag ? dot.y2 : dot.y1,
+        x: dot.x2,
+        y: dot.y2,
       };
       this.setState({
         crossHairLocation: obj,
@@ -219,6 +224,9 @@ class DrawImage extends React.Component {
         handDraw: false,
       });
     } else if (name === 'Draw Circle') {
+      this.setState({
+        circleModal: true,
+      });
     }
     this.setState({
       showFullBottomTools: false,
@@ -245,6 +253,17 @@ class DrawImage extends React.Component {
       this.setState({showImage: false});
     }
   };
+  array_move(arr, old_index, new_index) {
+    if (new_index >= arr.length) {
+      var k = new_index - arr.length + 1;
+      while (k--) {
+        arr.push(undefined);
+      }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr; // for testing
+  }
+
   render() {
     let {
       linePaths,
@@ -257,12 +276,13 @@ class DrawImage extends React.Component {
       showButtons,
       crossHairLocation,
       changeDirection,
+      circleSize,
     } = this.state;
-    console.log('test==>', changeDirection, linePaths.length);
+    console.log('test==>', this.state.circleSize);
     return (
       <View style={{flex: 1}}>
         {this.header()}
-        <View style={{flex: 1, zIndex: 1200}}>
+        <View style={{flex: 1, zIndex: 0}}>
           <View
             style={{
               flex: 1,
@@ -282,6 +302,29 @@ class DrawImage extends React.Component {
                 top: crossHairLocation.y - 10,
               }}
             />
+            {circleSize ? (
+              <MovableView
+                style={{
+                  zIndex: 1200,
+                  position: 'absolute',
+                }}>
+                <Icon
+                  name="circle-thin"
+                  type="font-awesome"
+                  size={+circleSize * 5}
+                />
+                <TouchableOpacity
+                  onPress={() => this.setState({circleSize: 0})}
+                  style={styles.deleteIcon}>
+                  <Icon
+                    name="delete"
+                    type="material-community-icons"
+                    color="red"
+                    size={20}
+                  />
+                </TouchableOpacity>
+              </MovableView>
+            ) : null}
             <Svg>
               {linePaths.map((coordinates) => {
                 return (
@@ -305,7 +348,7 @@ class DrawImage extends React.Component {
                 left: 0,
                 right: 0,
                 top: 0,
-                zIndex: 1200,
+                zIndex: 1,
               }}
               ref={(e) => (this._canvas = e)}
               onStrokeStart={(x, y) => {
@@ -313,7 +356,9 @@ class DrawImage extends React.Component {
                   x: x,
                   y: y,
                 };
-                this.setState({crossHairLocation: obj});
+                if (!this.state.strokeStart) {
+                  this.setState({crossHairLocation: obj, strokeStart: true});
+                }
               }}
               onStrokeEnd={(paths) => {
                 if (!this.state.handDraw) {
@@ -327,11 +372,20 @@ class DrawImage extends React.Component {
                     ? lastLinePaths[0]
                     : lastLinePaths[lastLinePaths.length - 1];
                   let obj = {
-                    x1: dot?.x2 ? `${dot.x2}` : crossHairLocation.x,
-                    y1: dot?.y2 ? `${dot.y2}` : crossHairLocation.y,
+                    x1: this.state.strokeStart
+                      ? crossHairLocation.x
+                      : dot?.x2
+                      ? `${dot.x2}`
+                      : crossHairLocation.x,
+                    y1: this.state.strokeStart
+                      ? crossHairLocation.y
+                      : dot?.y2
+                      ? `${dot.y2}`
+                      : crossHairLocation.y,
                     x2: splitted1[0],
                     y2: splitted1[1],
                     strokeColor: strokeColor,
+                    id: paths.path.id,
                   };
                   let point = {
                     x: splitted1[0],
@@ -340,8 +394,11 @@ class DrawImage extends React.Component {
                   this.setState({
                     crossHairLocation: point,
                   });
-                  console.log('hh===>', obj.bottom, obj.right);
-                  linePaths.push(obj);
+                  if (changeDirection.flag) {
+                    linePaths.unshift(obj);
+                  } else {
+                    linePaths.push(obj);
+                  }
                   this.handleLinePath(linePaths);
                   this._canvas.deletePath(paths.path.id);
                 } else {
@@ -353,6 +410,13 @@ class DrawImage extends React.Component {
             />
           </View>
         </View>
+        {this.state.circleModal && (
+          <CircleModal
+            setCircleModal={(size) =>
+              this.setState({circleModal: false, circleSize: size})
+            }
+          />
+        )}
         {this.footer()}
       </View>
     );
@@ -425,6 +489,18 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: 'hidden',
     paddingHorizontal: 12,
+  },
+  deleteIcon: {
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    height: 25,
+    width: 25,
+    borderColor: '#000',
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 2,
   },
 });
 

@@ -3,6 +3,7 @@ import {Icon} from 'react-native-elements';
 import {themeColor} from '../Constant';
 import {TextInput, View} from 'react-native';
 import Text from './Text';
+
 export default CustomInput = (props) => (
   <View
     style={{
@@ -17,6 +18,7 @@ export default CustomInput = (props) => (
       </Text>
     ) : null}
     <TextInput
+      keyboardType={props.keyboardType}
       style={[
         {
           height: 50,
