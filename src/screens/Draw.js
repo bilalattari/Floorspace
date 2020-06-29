@@ -4,11 +4,14 @@ import {Icon} from 'react-native-elements';
 import Text from '../Component/Text';
 import ImagePicker from 'react-native-image-crop-picker';
 import {drawTools} from '../Objects/drawTool';
-import Svg, {Line, Circle} from 'react-native-svg';
+import Svg, {Line, Circle, G} from 'react-native-svg';
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 import CircleModal from '../Component/CircleModal';
+import HandDrawModal from '../Component/HandDrawModal';
+import TextModal from '../Component/TextModal';
 import MovableView from 'react-native-movable-view';
 import FIcon from 'react-native-vector-icons/FontAwesome';
+import IIcon from 'react-native-vector-icons/Ionicons';
 
 let header = [
   {name: 'close', type: 'material-community'},
@@ -38,9 +41,19 @@ class DrawImage extends React.Component {
       },
       showCrossHairImage: false,
       handDraw: false,
+      handDrawModal: false,
+      HandDrawColor: '',
+      HandDrawSize: 0,
       strokeStart: false,
+      strokeEnd: false,
       circleModal: false,
-      circleSize: 20,
+      overAllDimension: false,
+      circleSize: 0,
+      textModal: false,
+      textIns: '',
+      textInsStyle: '',
+      textInsSize: 0,
+      textInsColor: '',
     };
   }
 
@@ -184,24 +197,35 @@ class DrawImage extends React.Component {
         y1: firstDot && firstDot.y1,
         x2: lastDot && lastDot.x2,
         y2: lastDot && firstDot.y2,
+        strokeColor: this.state.strokeColor,
       };
       let closeRect2 = {
         x1: lastDot && lastDot.x2,
         y1: firstDot && firstDot.y1,
         x2: lastDot && lastDot.x2,
         y2: lastDot && lastDot.y2,
+        strokeColor: this.state.strokeColor,
       };
       lines.push(closeRect1, closeRect2);
       this.handleLinePath(lines);
+      this.setState({
+        strokeEnd: false,
+        strokeStart: false,
+      });
     } else if (name === 'Close Shape') {
       let closeShape = {
         x1: firstDot && `${firstDot.x1}`,
         y1: firstDot && `${firstDot.y1}`,
         x2: lastDot && lastDot.x2,
         y2: lastDot && lastDot.y2,
+        strokeColor: this.state.strokeColor,
       };
       lines.push(closeShape);
       this.handleLinePath(lines);
+      this.setState({
+        strokeEnd: false,
+        strokeStart: false,
+      });
     } else if (name === 'Change Direction') {
       let dot = changeDirection.flag ? lines[lines.length - 1] : firstDot;
       let obj = {
@@ -217,15 +241,34 @@ class DrawImage extends React.Component {
       });
     } else if (name === 'Hand Draw') {
       this.setState({
-        handDraw: !this.state.handDraw,
+        handDrawModal: true,
       });
     } else if (name === 'Free Draw') {
       this.setState({
         handDraw: false,
+        HandDrawSize: 0,
+        HandDrawColor: '',
+        strokeEnd: false,
+        strokeStart: false,
+        strokeColor: '#12B3B4',
+        overAllDimension: false,
       });
     } else if (name === 'Draw Circle') {
       this.setState({
         circleModal: true,
+      });
+    } else if (name === 'Overall Dimension') {
+      this.setState({
+        strokeColor: '#000',
+        overAllDimension: true,
+        strokeEnd: false,
+        strokeStart: false,
+      });
+    } else if (name === 'Cutout') {
+      alert('cut out');
+    } else if (name === 'Text Instruction') {
+      this.setState({
+        textModal: true,
       });
     }
     this.setState({
@@ -277,8 +320,18 @@ class DrawImage extends React.Component {
       crossHairLocation,
       changeDirection,
       circleSize,
+      handDraw,
+      handDrawModal,
+      HandDrawSize,
+      HandDrawColor,
+      overAllDimension,
+      textModal,
+      textIns,
+      textInsColor,
+      textInsSize,
+      textInsStyle,
     } = this.state;
-    console.log('test==>', this.state.circleSize);
+    console.log('test==>', overAllDimension);
     return (
       <View style={{flex: 1}}>
         {this.header()}
@@ -315,27 +368,69 @@ class DrawImage extends React.Component {
                 />
                 <TouchableOpacity
                   onPress={() => this.setState({circleSize: 0})}
-                  style={styles.deleteIcon}>
+                  style={[
+                    styles.deleteIcon,
+                    {width: +circleSize * 1.2, height: +circleSize * 1.2},
+                  ]}>
                   <Icon
                     name="delete"
                     type="material-community-icons"
                     color="red"
-                    size={20}
+                    size={+circleSize}
                   />
                 </TouchableOpacity>
               </MovableView>
             ) : null}
+            {textIns ? (
+              <MovableView
+                style={{
+                  zIndex: 1200,
+                  position: 'absolute',
+                }}>
+                <Text
+                  style={{fontSize: +textInsSize, color: textInsColor}}
+                  text={textIns}
+                />
+              </MovableView>
+            ) : null}
             <Svg>
               {linePaths.map((coordinates) => {
+                console.log('cccc', coordinates);
                 return (
-                  <Line
-                    x1={coordinates.x1}
-                    y1={coordinates.y1}
-                    x2={coordinates.x2}
-                    y2={coordinates.y2}
-                    stroke={strokeColor}
-                    strokeWidth="5"
-                  />
+                  <>
+                    {coordinates.overAllDimension && (
+                      <>
+                        <IIcon
+                          style={{
+                            position: 'absolute',
+                            left: coordinates.x1 - 10,
+                            top: coordinates.y1 - 20,
+                          }}
+                          name="md-arrow-dropup"
+                          type="ionicons"
+                          size={40}
+                        />
+                        <IIcon
+                          style={{
+                            position: 'absolute',
+                            left: coordinates.x2 - 10,
+                            top: coordinates.y2 - 20,
+                          }}
+                          name="md-arrow-dropdown"
+                          type="ionicons"
+                          size={40}
+                        />
+                      </>
+                    )}
+                    <Line
+                      x1={coordinates.x1}
+                      y1={coordinates.y1}
+                      x2={coordinates.x2}
+                      y2={coordinates.y2}
+                      stroke={coordinates.strokeColor}
+                      strokeWidth="5"
+                    />
+                  </>
                 );
               })}
             </Svg>
@@ -357,11 +452,14 @@ class DrawImage extends React.Component {
                   y: y,
                 };
                 if (!this.state.strokeStart) {
-                  this.setState({crossHairLocation: obj, strokeStart: true});
+                  this.setState({
+                    crossHairLocation: obj,
+                    strokeStart: true,
+                  });
                 }
               }}
               onStrokeEnd={(paths) => {
-                if (!this.state.handDraw) {
+                if (!handDraw) {
                   let lastLinePaths = this.state.linePaths;
                   let path = paths.path;
                   let firstPath = path.data[0];
@@ -372,41 +470,45 @@ class DrawImage extends React.Component {
                     ? lastLinePaths[0]
                     : lastLinePaths[lastLinePaths.length - 1];
                   let obj = {
-                    x1: this.state.strokeStart
-                      ? crossHairLocation.x
-                      : dot?.x2
-                      ? `${dot.x2}`
-                      : crossHairLocation.x,
-                    y1: this.state.strokeStart
-                      ? crossHairLocation.y
-                      : dot?.y2
-                      ? `${dot.y2}`
-                      : crossHairLocation.y,
+                    x1:
+                      overAllDimension || this.state.strokeStart
+                        ? crossHairLocation.x
+                        : dot?.x2
+                        ? `${dot.x2}`
+                        : crossHairLocation.x,
+                    y1:
+                      overAllDimension || this.state.strokeStart
+                        ? crossHairLocation.y
+                        : dot?.y2
+                        ? `${dot.y2}`
+                        : crossHairLocation.y,
                     x2: splitted1[0],
                     y2: splitted1[1],
                     strokeColor: strokeColor,
                     id: paths.path.id,
+                    overAllDimension,
                   };
                   let point = {
                     x: splitted1[0],
                     y: splitted1[1],
                   };
-                  this.setState({
-                    crossHairLocation: point,
-                  });
-                  if (changeDirection.flag) {
+                  if (changeDirection.flag || !this.state.strokeEnd) {
                     linePaths.unshift(obj);
                   } else {
                     linePaths.push(obj);
                   }
+                  this.setState({
+                    crossHairLocation: point,
+                    strokeEnd: true,
+                  });
                   this.handleLinePath(linePaths);
                   this._canvas.deletePath(paths.path.id);
                 } else {
                   console.log(paths.path.id, 'id');
                 }
               }}
-              strokeColor={strokeColor}
-              strokeWidth={5}
+              strokeColor={HandDrawColor ? HandDrawColor : strokeColor}
+              strokeWidth={HandDrawSize ? HandDrawSize : 5}
             />
           </View>
         </View>
@@ -415,6 +517,31 @@ class DrawImage extends React.Component {
             setCircleModal={(size) =>
               this.setState({circleModal: false, circleSize: size})
             }
+          />
+        )}
+        {handDrawModal && (
+          <HandDrawModal
+            setHandDraw={(color, size) => {
+              this.setState({
+                handDrawModal: false,
+                handDraw: true,
+                HandDrawSize: size,
+                HandDrawColor: color,
+              });
+            }}
+          />
+        )}
+        {textModal && (
+          <TextModal
+            setTextModal={(data) => {
+              this.setState({
+                textIns: data.text,
+                textInsStyle: data.style,
+                textInsSize: data.size,
+                textInsColor: data.color,
+                textModal: false,
+              });
+            }}
           />
         )}
         {this.footer()}
@@ -493,8 +620,6 @@ const styles = StyleSheet.create({
   deleteIcon: {
     backgroundColor: '#fff',
     borderRadius: 50,
-    height: 25,
-    width: 25,
     borderColor: '#000',
     borderWidth: 1,
     justifyContent: 'center',
