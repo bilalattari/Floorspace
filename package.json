@@ -21,6 +21,7 @@
     "react-native-alphabet-sectionlist": "0.0.4",
     "react-native-alphabetlistview": "^0.3.1",
     "react-native-drawer": "^2.5.1",
+    "react-native-easy-gestures": "^2.2.4",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-crop-picker": "^0.30.0",

@@ -9,9 +9,12 @@ import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 import CircleModal from '../Component/CircleModal';
 import HandDrawModal from '../Component/HandDrawModal';
 import TextModal from '../Component/TextModal';
+import DrawTrimModal from '../Component/DrawTrimModal';
+import DrawRectModal from '../Component/DrawRectModal';
 import MovableView from 'react-native-movable-view';
 import FIcon from 'react-native-vector-icons/FontAwesome';
 import IIcon from 'react-native-vector-icons/Ionicons';
+import Gestures from 'react-native-easy-gestures';
 
 let header = [
   {name: 'close', type: 'material-community'},
@@ -48,12 +51,13 @@ class DrawImage extends React.Component {
       strokeEnd: false,
       circleModal: false,
       overAllDimension: false,
-      circleSize: 0,
+      circles: [],
       textModal: false,
-      textIns: '',
-      textInsStyle: '',
-      textInsSize: 0,
-      textInsColor: '',
+      textIns: [],
+      drawTrim: false,
+      trimBtn: false,
+      drawRectModal: false,
+      drawRects: [],
     };
   }
 
@@ -270,6 +274,16 @@ class DrawImage extends React.Component {
       this.setState({
         textModal: true,
       });
+    } else if (name === 'DrawTrim') {
+      this.setState({
+        drawTrim: true,
+        strokeEnd: false,
+        strokeStart: false,
+      });
+    } else if (name === 'Draw Rect') {
+      this.setState({
+        drawRectModal: true,
+      });
     }
     this.setState({
       showFullBottomTools: false,
@@ -306,6 +320,14 @@ class DrawImage extends React.Component {
     arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
     return arr; // for testing
   }
+  delete_circle(i) {
+    console.log(i);
+    console.log(this.state.circles);
+    this.state.circles.splice(i, 1);
+    this.setState({
+      circles: this.state.circles,
+    });
+  }
 
   render() {
     let {
@@ -319,7 +341,7 @@ class DrawImage extends React.Component {
       showButtons,
       crossHairLocation,
       changeDirection,
-      circleSize,
+      circles,
       handDraw,
       handDrawModal,
       HandDrawSize,
@@ -327,14 +349,28 @@ class DrawImage extends React.Component {
       overAllDimension,
       textModal,
       textIns,
-      textInsColor,
-      textInsSize,
-      textInsStyle,
+      drawTrim,
+      trimBtn,
+      drawRectModal,
+      drawRects,
     } = this.state;
-    console.log('test==>', overAllDimension);
     return (
       <View style={{flex: 1}}>
         {this.header()}
+        {trimBtn && (
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({
+                strokeColor: '#12B3B4',
+                trimBtn: false,
+                strokeEnd: false,
+                strokeStart: false,
+              });
+            }}
+            style={[styles.doneBtn, {borderColor: strokeColor}]}>
+            <Text font={18} text="Done" color={strokeColor} />
+          </TouchableOpacity>
+        )}
         <View style={{flex: 1, zIndex: 0}}>
           <View
             style={{
@@ -355,44 +391,103 @@ class DrawImage extends React.Component {
                 top: crossHairLocation.y - 10,
               }}
             />
-            {circleSize ? (
-              <MovableView
-                style={{
-                  zIndex: 1200,
-                  position: 'absolute',
-                }}>
-                <Icon
-                  name="circle-thin"
-                  type="font-awesome"
-                  size={+circleSize * 5}
-                />
-                <TouchableOpacity
-                  onPress={() => this.setState({circleSize: 0})}
-                  style={[
-                    styles.deleteIcon,
-                    {width: +circleSize * 1.2, height: +circleSize * 1.2},
-                  ]}>
-                  <Icon
-                    name="delete"
-                    type="material-community-icons"
-                    color="red"
-                    size={+circleSize}
+            {drawRects.map((v, i) => {
+              return (
+                <Gestures
+                  style={{
+                    zIndex: 1200,
+                  }}
+                  key={i}>
+                  <View
+                    style={{
+                      height: +v.length * 10,
+                      width: +v.width * 10,
+                      borderWidth: 5,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      zIndex: 1200,
+                    }}
                   />
-                </TouchableOpacity>
-              </MovableView>
-            ) : null}
-            {textIns ? (
-              <MovableView
-                style={{
-                  zIndex: 1200,
-                  position: 'absolute',
-                }}>
-                <Text
-                  style={{fontSize: +textInsSize, color: textInsColor}}
-                  text={textIns}
-                />
-              </MovableView>
-            ) : null}
+                  {/* <Text
+                    style={{position: 'absolute', top: '40%', left: '12%'}}
+                    font={18}
+                    text={v.label}
+                  /> */}
+                </Gestures>
+              );
+            })}
+            {circles.map((v, i) => {
+              return (
+                <Gestures
+                  style={{
+                    zIndex: 1200,
+                    width: +v * 5,
+                  }}
+                  key={i}>
+                  <Icon name="circle-thin" type="font-awesome" size={+v * 5} />
+                  <TouchableOpacity
+                    onPress={() => this.delete_circle(i)}
+                    style={[
+                      styles.deleteIcon,
+                      {width: +v * 1.2, height: +v * 1.2},
+                    ]}>
+                    <Icon
+                      name="delete"
+                      type="material-community-icons"
+                      color="red"
+                      size={+v}
+                    />
+                  </TouchableOpacity>
+                </Gestures>
+              );
+            })}
+            {textIns.map((v, i) => {
+              console.log(v);
+              return (
+                <Gestures
+                  key={i}
+                  style={{
+                    zIndex: 1200,
+                    position: 'absolute',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: +v.size,
+                      color: v.color,
+                      textDecorationLine: v.style,
+                      fontWeight: v.style,
+                      paddingRight: 25,
+                    }}
+                    text={v.text}
+                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      textIns.splice(i, 1);
+                      this.setState({
+                        textIns: textIns,
+                      });
+                    }}
+                    style={[
+                      styles.deleteIcon,
+                      {
+                        width: 20,
+                        height: 20,
+                        right: 0,
+                        top: 0,
+                        zIndex: 1200,
+                      },
+                    ]}>
+                    <Icon
+                      style={{marginLeft: 30}}
+                      name="delete"
+                      type="material-community-icons"
+                      color="red"
+                      size={+v.size}
+                    />
+                  </TouchableOpacity>
+                </Gestures>
+              );
+            })}
             <Svg>
               {linePaths.map((coordinates) => {
                 console.log('cccc', coordinates);
@@ -514,9 +609,10 @@ class DrawImage extends React.Component {
         </View>
         {this.state.circleModal && (
           <CircleModal
-            setCircleModal={(size) =>
-              this.setState({circleModal: false, circleSize: size})
-            }
+            setCircleModal={(size) => {
+              circles.push(size);
+              this.setState({circleModal: false, circles: circles});
+            }}
           />
         )}
         {handDrawModal && (
@@ -534,12 +630,37 @@ class DrawImage extends React.Component {
         {textModal && (
           <TextModal
             setTextModal={(data) => {
+              textIns.push({
+                text: data.text,
+                style: data.style,
+                size: data.size,
+                color: data.color,
+              });
               this.setState({
-                textIns: data.text,
-                textInsStyle: data.style,
-                textInsSize: data.size,
-                textInsColor: data.color,
+                textIns: textIns,
                 textModal: false,
+              });
+            }}
+          />
+        )}
+        {drawTrim && (
+          <DrawTrimModal
+            setDrawTrim={(trim, color) => {
+              this.setState({
+                strokeColor: color,
+                drawTrim: false,
+                trimBtn: true,
+              });
+            }}
+          />
+        )}
+        {drawRectModal && (
+          <DrawRectModal
+            setRectModal={(data) => {
+              drawRects.push(data);
+              this.setState({
+                drawRects: drawRects,
+                drawRectModal: false,
               });
             }}
           />
@@ -626,6 +747,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     right: 2,
+  },
+  doneBtn: {
+    borderWidth: 2,
+    borderRadius: 50,
+    height: 40,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
   },
 });
 

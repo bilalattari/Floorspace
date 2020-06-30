@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import {Alert, Modal, TouchableOpacity, View, StyleSheet} from 'react-native';
 import Text from './Text';
 import Input from './Input';
-import FPicker from './Picker';
-export default function TextModal(props) {
-  const [text, setText] = useState('');
-  const [style, setStyle] = useState('bold');
-  const [size, setSize] = useState('');
-  const [color, setColor] = useState('green');
+
+export default function DrawRectModal(props) {
+  const [width, setWidth] = useState(0);
+  const [length, setLength] = useState(0);
+  const [label, setLabel] = useState('');
 
   return (
     <View style={styles.centeredView}>
@@ -20,60 +19,50 @@ export default function TextModal(props) {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text font={24} text={'Text Instruction'} />
+            <Text font={24} text={'Draw Rect'} />
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <View style={{width: '100%'}}>
                 <Input
-                  value={text}
-                  onChangeText={(text) => setText(text)}
-                  customStyle={{marginTop: 5}}
-                  title={'Enter Text'}
-                  placeholder={'Enter Text'}
-                />
-              </View>
-            </View>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{width: '95%'}}>
-                <FPicker
-                  selectedValue={style}
-                  onChange={(item) => setStyle(item)}
-                  bold={false}
-                  pickerItems={['bold', 'italic', 'underline']}
-                  header={'Font Style'}
-                />
-              </View>
-            </View>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{width: '100%'}}>
-                <Input
-                  value={size}
-                  onChangeText={(text) => setSize(text)}
+                  value={width}
+                  onChangeText={(text) => setWidth(text)}
                   keyboardType={'numeric'}
                   customStyle={{marginTop: 5}}
-                  title={'Font Size in PX'}
-                  placeholder={'Font Size'}
+                  title={'Enter Width'}
+                  placeholder={'Enter Width'}
                 />
               </View>
             </View>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{width: '95%'}}>
-                <FPicker
-                  selectedValue={color}
-                  onChange={(item) => setColor(item)}
-                  bold={false}
-                  pickerItems={['green', 'blue', 'red']}
-                  header={'Font Colour'}
+              <View style={{width: '100%'}}>
+                <Input
+                  value={length}
+                  onChangeText={(text) => setLength(text)}
+                  keyboardType={'numeric'}
+                  customStyle={{marginTop: 5}}
+                  title={'Enter Length'}
+                  placeholder={'Enter Length'}
                 />
               </View>
             </View>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={{width: '100%'}}>
+                <Input
+                  value={label}
+                  onChangeText={(text) => setLabel(text)}
+                  customStyle={{marginTop: 5}}
+                  title={'Enter Label'}
+                  placeholder={'Enter Label'}
+                />
+              </View>
+            </View>
+
             <TouchableOpacity
-              onPress={() => props.setTextModal({text, style, size, color})}
+              onPress={() => props.setRectModal({width, length, label})}
               style={styles.btn}>
-              <Text color="#fff" size={20} text={'SAVE'} />
+              <Text color="#fff" size={20} text={'OK'} />
             </TouchableOpacity>
           </View>
         </View>
