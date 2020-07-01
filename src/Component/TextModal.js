@@ -65,7 +65,7 @@ export default function TextModal(props) {
                   selectedValue={color}
                   onChange={(item) => setColor(item)}
                   bold={false}
-                  pickerItems={['green', 'blue', 'red']}
+                  pickerItems={['black', 'orange', 'green', 'blue', 'red']}
                   header={'Font Colour'}
                 />
               </View>

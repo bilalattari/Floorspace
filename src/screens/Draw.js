@@ -15,6 +15,7 @@ import MovableView from 'react-native-movable-view';
 import FIcon from 'react-native-vector-icons/FontAwesome';
 import IIcon from 'react-native-vector-icons/Ionicons';
 import Gestures from 'react-native-easy-gestures';
+import Keypad from '../Component/Keypad';
 
 let header = [
   {name: 'close', type: 'material-community'},
@@ -58,6 +59,7 @@ class DrawImage extends React.Component {
       trimBtn: false,
       drawRectModal: false,
       drawRects: [],
+      keypad: false,
     };
   }
 
@@ -279,10 +281,15 @@ class DrawImage extends React.Component {
         drawTrim: true,
         strokeEnd: false,
         strokeStart: false,
+        overAllDimension: false,
       });
     } else if (name === 'Draw Rect') {
       this.setState({
         drawRectModal: true,
+      });
+    } else if (name === 'Keypad') {
+      this.setState({
+        keypad: !this.state.keypad,
       });
     }
     this.setState({
@@ -353,6 +360,7 @@ class DrawImage extends React.Component {
       trimBtn,
       drawRectModal,
       drawRects,
+      keypad,
     } = this.state;
     return (
       <View style={{flex: 1}}>
@@ -395,24 +403,20 @@ class DrawImage extends React.Component {
               return (
                 <Gestures
                   style={{
+                    width: +v.width,
                     zIndex: 1200,
+                    position: 'absolute',
                   }}
                   key={i}>
                   <View
                     style={{
-                      height: +v.length * 10,
-                      width: +v.width * 10,
+                      height: +v.length,
+                      width: +v.width,
                       borderWidth: 5,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      zIndex: 1200,
                     }}
                   />
-                  {/* <Text
-                    style={{position: 'absolute', top: '40%', left: '12%'}}
-                    font={18}
-                    text={v.label}
-                  /> */}
                 </Gestures>
               );
             })}
@@ -422,22 +426,10 @@ class DrawImage extends React.Component {
                   style={{
                     zIndex: 1200,
                     width: +v * 5,
+                    position: 'absolute',
                   }}
                   key={i}>
                   <Icon name="circle-thin" type="font-awesome" size={+v * 5} />
-                  <TouchableOpacity
-                    onPress={() => this.delete_circle(i)}
-                    style={[
-                      styles.deleteIcon,
-                      {width: +v * 1.2, height: +v * 1.2},
-                    ]}>
-                    <Icon
-                      name="delete"
-                      type="material-community-icons"
-                      color="red"
-                      size={+v}
-                    />
-                  </TouchableOpacity>
                 </Gestures>
               );
             })}
@@ -456,35 +448,11 @@ class DrawImage extends React.Component {
                       color: v.color,
                       textDecorationLine: v.style,
                       fontWeight: v.style,
+                      fontStyle: v.style,
                       paddingRight: 25,
                     }}
                     text={v.text}
                   />
-                  <TouchableOpacity
-                    onPress={() => {
-                      textIns.splice(i, 1);
-                      this.setState({
-                        textIns: textIns,
-                      });
-                    }}
-                    style={[
-                      styles.deleteIcon,
-                      {
-                        width: 20,
-                        height: 20,
-                        right: 0,
-                        top: 0,
-                        zIndex: 1200,
-                      },
-                    ]}>
-                    <Icon
-                      style={{marginLeft: 30}}
-                      name="delete"
-                      type="material-community-icons"
-                      color="red"
-                      size={+v.size}
-                    />
-                  </TouchableOpacity>
                 </Gestures>
               );
             })}
@@ -607,6 +575,11 @@ class DrawImage extends React.Component {
             />
           </View>
         </View>
+        {keypad && (
+          <MovableView style={{position: 'absolute'}}>
+            <Keypad />
+          </MovableView>
+        )}
         {this.state.circleModal && (
           <CircleModal
             setCircleModal={(size) => {
@@ -756,6 +729,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
+    top: 70,
+    right: 25,
+    zIndex: 1200,
   },
 });
 
