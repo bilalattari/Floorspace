@@ -16,6 +16,7 @@ import FIcon from 'react-native-vector-icons/FontAwesome';
 import IIcon from 'react-native-vector-icons/Ionicons';
 import Gestures from 'react-native-easy-gestures';
 import Keypad from '../Component/Keypad';
+import SortableGrid from 'react-native-sortable-grid-with-fixed';
 
 let header = [
   {name: 'close', type: 'material-community'},
@@ -60,6 +61,8 @@ class DrawImage extends React.Component {
       drawRectModal: false,
       drawRects: [],
       keypad: false,
+      customTool: false,
+      drawTools: drawTools,
     };
   }
 
@@ -89,7 +92,7 @@ class DrawImage extends React.Component {
   );
 
   footer = () => {
-    let {showFullBottomTools} = this.state;
+    let {showFullBottomTools, customTool} = this.state;
     return (
       <View style={styles.iconButton}>
         <TouchableOpacity
@@ -106,63 +109,62 @@ class DrawImage extends React.Component {
           />
         </TouchableOpacity>
         <View style={styles.drawToolView}>
-          <View style={styles.rowView}>
-            {drawTools[0].map((data, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => this.onPressDrawTool(data.name)}
-                style={styles.bottomToolsButton}>
-                <Image source={data.image} />
-                <Text color={'#fff'} font={10} bold={true} align={'center'}>
-                  {data.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
+          <View
+            style={[
+              styles.rowView,
+              {
+                height: showFullBottomTools ? 'auto' : 70,
+              },
+            ]}>
+            {customTool ? (
+              <SortableGrid
+                onDragRelease
+                itemsPerRow={6}
+                onDragRelease={({itemOrder}) =>
+                  this.setState({
+                    drawTools: itemOrder.map(
+                      (i) => this.state.drawTools[+i.key],
+                    ),
+                  })
+                }
+                style={{
+                  flex: 1,
+                  marginBottom: 12,
+                }}>
+                {this.state.drawTools.map((data, index) => (
+                  <View
+                    key={index}
+                    onTap={() =>
+                      data.name === 'Custom Toolbox' &&
+                      this.setState({customTool: !customTool})
+                    }
+                    style={[styles.bottomToolsButton, {width: 60}]}>
+                    <Image source={data.image} />
+                    <Text color={'#fff'} font={10} bold={true} align={'center'}>
+                      {data.name}
+                    </Text>
+                  </View>
+                ))}
+              </SortableGrid>
+            ) : (
+              this.state.drawTools.map((data, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => this.onPressDrawTool(data.name)}
+                  style={styles.bottomToolsButton}>
+                  <Image source={data.image} />
+                  <Text color={'#fff'} font={10} bold={true} align={'center'}>
+                    {data.name}
+                  </Text>
+                </TouchableOpacity>
+              ))
+            )}
           </View>
-          {showFullBottomTools && (
-            <>
-              <View style={styles.rowView}>
-                {drawTools[1].map((data, index) => (
-                  <TouchableOpacity
-                    onPress={() => this.onPressDrawTool(data.name)}
-                    style={styles.bottomToolsButton}>
-                    <Image source={data.image} />
-                    <Text color={'#fff'} font={12} bold={true} align={'center'}>
-                      {data.name}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-              <View style={styles.rowView}>
-                {drawTools[2].map((data, index) => (
-                  <TouchableOpacity
-                    onPress={() => this.onPressDrawTool(data.name)}
-                    style={styles.bottomToolsButton}>
-                    <Image source={data.image} />
-                    <Text color={'#fff'} font={12} bold={true} align={'center'}>
-                      {data.name}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-              <View style={styles.rowView}>
-                {drawTools[3].map((data, index) => (
-                  <TouchableOpacity
-                    onPress={() => this.onPressDrawTool(data.name)}
-                    style={styles.bottomToolsButton}>
-                    <Image source={data.image} />
-                    <Text color={'#fff'} font={12} bold={true} align={'center'}>
-                      {data.name}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </>
-          )}
         </View>
       </View>
     );
   };
+
   handleLinePath = (arr) => {
     this.setState({linePaths: arr});
   };
@@ -291,9 +293,13 @@ class DrawImage extends React.Component {
       this.setState({
         keypad: !this.state.keypad,
       });
+    } else if (name === 'Custom Toolbox') {
+      this.setState({
+        customTool: !this.state.customTool,
+      });
     }
     this.setState({
-      showFullBottomTools: false,
+      showFullBottomTools: name === 'Custom Toolbox' ? true : false,
     });
   };
   handleStrokeColor = (color) => {
@@ -683,7 +689,7 @@ const styles = StyleSheet.create({
     width: '95%',
     alignSelf: 'center',
   },
-  rowView: {flexDirection: 'row'},
+  rowView: {flexDirection: 'row', flexWrap: 'wrap'},
   topHeaderUndoRedo: {
     width: 110,
     height: 45,
@@ -700,10 +706,10 @@ const styles = StyleSheet.create({
     height: 65,
   },
   bottomToolsButton: {
-    flex: 1,
     padding: 6,
     paddingTop: 12,
     alignItems: 'center',
+    width: '16.5%',
   },
   drawToolView: {
     backgroundColor: '#2D2D2D',
