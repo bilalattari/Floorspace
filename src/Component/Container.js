@@ -31,9 +31,14 @@ export default class Header extends Component {
         openDrawerOffset={0.2} // 20% gap on the right side of drawer
         panCloseMask={0.2}
         closedDrawerOffset={-3}
-        style={{flex: 1, backgroundColor: '#fff' ,}}
+        styles={{
+          drawerOverlay: {
+           borderRightWidth: 2,
+           borderRightColor: 'rgba(0, 0, 0, 0.1)',
+          },
+        }}
         content={<ControlPanel navigation={this.props.navigation} />}>
-        <View style={{backgroundColor: 'rgb(255,255,255)' ,}}>
+        <View style={{backgroundColor: 'rgb(255,255,255)'}}>
           <View style={styles.header}>
             <TouchableOpacity onPress={this.openControlPanel}>
               <Image
@@ -55,8 +60,8 @@ export default class Header extends Component {
             onChangeText={(text) => this.props.onChangeText(text)}
             inputContainerStyle={styles.inputContainerStyle}
             placeholderTextColor={'#707070'}
-            value = {this.props.value}
-            onCancel = {()=> this.props.cancel()}
+            value={this.props.value}
+            onCancel={() => this.props.cancel()}
             inputStyle={{fontWeight: 'bold', fontSize: 15}}
           />
         </View>
@@ -92,5 +97,5 @@ const styles = StyleSheet.create({
   },
 
   menu: {height: 40, width: 40, resizeMode: 'contain'},
-  avatar: {height: 50, width: 50 , borderRadius : 125 , },
+  avatar: {height: 50, width: 50, borderRadius: 125},
 });

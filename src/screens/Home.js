@@ -125,7 +125,7 @@ class Home extends Component {
                   <Text
                     color={'#000'}
                     text={item.address}
-                    font={15}
+                    font={12}
                     bold={true}
                   />
                   <Text
@@ -135,7 +135,7 @@ class Home extends Component {
                   />
                   <Text
                     color={'#707070'}
-                    text={`Created : ${item.modified} ${item.modifiedTime}`}
+                    text={`Edited : ${item.modified} ${item.modifiedTime}`}
                     font={15}
                   />
                 </View>

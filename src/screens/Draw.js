@@ -63,20 +63,26 @@ class DrawImage extends React.Component {
       keypad: false,
       customTool: false,
       drawTools: drawTools,
+      dark: false,
     };
   }
 
   header = () => (
     <View style={styles.topHeaderView}>
       {header.map((icon, index) => {
+        console.log(icon);
         return (
-          <TouchableOpacity key={index} style={styles.topHeaderButton}>
-            <Icon
-              type={icon.type}
-              name={icon.name}
-              color={icon.name === 'chevron-left' ? 'grey' : '#fff'}
-              size={25}
-            />
+          <TouchableOpacity
+            onPress={() => {
+              if (icon.name === 'contrast') {
+                this.setState({
+                  dark: !this.state.dark,
+                });
+              }
+            }}
+            key={index}
+            style={styles.topHeaderButton}>
+            <Icon type={icon.type} name={icon.name} color={'#fff'} size={25} />
           </TouchableOpacity>
         );
       })}
@@ -367,9 +373,10 @@ class DrawImage extends React.Component {
       drawRectModal,
       drawRects,
       keypad,
+      dark,
     } = this.state;
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: dark ? '#000' : '#fff'}}>
         {this.header()}
         {trimBtn && (
           <TouchableOpacity
@@ -678,7 +685,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: 45,
     borderRadius: 25,
-    backgroundColor: '#000',
+    backgroundColor: '#2D2D2D',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -696,7 +703,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'space-around',
     flexDirection: 'row',
-    backgroundColor: '#000',
+    backgroundColor: '#2D2D2D',
     alignItems: 'center',
   },
   topHeaderView: {
