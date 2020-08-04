@@ -27,7 +27,10 @@ export default class ControlPanel extends Component {
   menuIcons = (text, navigateTo) => (
     <TouchableOpacity
       key={text}
-      onPress={() => this.props.navigation.navigate(navigateTo)}
+      onPress={() => {
+        this.props.closeControlPanel()
+        this.props.navigation.navigate(navigateTo)
+      }}
       style={styles.menuButton}>
       <CustomText text={text} font={16} bold={true} />
     </TouchableOpacity>

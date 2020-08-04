@@ -9,8 +9,8 @@ class Supplier extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      search : '',
       data: {
-        search : '',
         A: [
           {name: 'A Labour', description: 'Some Info'},
           {name: 'A Labour', description: 'Some Info'},

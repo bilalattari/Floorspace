@@ -17,6 +17,8 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* floorSpaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* floorSpaceTests.m */; };
+		764ABD5124D95796009A8B46 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 764ABD5024D95796009A8B46 /* OpenSans-Regular.ttf */; };
+		764ABD5324D957C0009A8B46 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 764ABD5224D957C0009A8B46 /* OpenSans-SemiBold.ttf */; };
 		8058A5A1C7A2B4FCD3FE758A /* libPods-floorSpace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B72DEAF3F705BEBE266AA6 /* libPods-floorSpace.a */; };
 		9DF577482B79934B92C84A75 /* libPods-floorSpace-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B33FD5034E968CC641A5339B /* libPods-floorSpace-tvOSTests.a */; };
 		CA2FA9F1C0879EC06182648A /* libPods-floorSpace-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE3ADB0A196E827A85946D57 /* libPods-floorSpace-tvOS.a */; };
@@ -60,6 +62,8 @@
 		34E081CB7FEE6D85E1DE379C /* libPods-floorSpace-floorSpaceTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-floorSpace-floorSpaceTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		379D12071B077033301A4DF4 /* Pods-floorSpace-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-floorSpace-tvOS.release.xcconfig"; path = "Target Support Files/Pods-floorSpace-tvOS/Pods-floorSpace-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		5F4AAC5179066C3794080B34 /* Pods-floorSpace-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-floorSpace-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-floorSpace-tvOS/Pods-floorSpace-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		764ABD5024D95796009A8B46 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		764ABD5224D957C0009A8B46 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		83FEEF2E4118959886A1121A /* Pods-floorSpace-floorSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-floorSpace-floorSpaceTests.debug.xcconfig"; path = "Target Support Files/Pods-floorSpace-floorSpaceTests/Pods-floorSpace-floorSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		994AE1FC57C41FB39863F3D7 /* Pods-floorSpace-floorSpaceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-floorSpace-floorSpaceTests.release.xcconfig"; path = "Target Support Files/Pods-floorSpace-floorSpaceTests/Pods-floorSpace-floorSpaceTests.release.xcconfig"; sourceTree = "<group>"; };
 		B33FD5034E968CC641A5339B /* libPods-floorSpace-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-floorSpace-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +129,7 @@
 		13B07FAE1A68108700A75B9A /* floorSpace */ = {
 			isa = PBXGroup;
 			children = (
+				764ABD4F24D956D4009A8B46 /* fonts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -162,6 +167,15 @@
 				28AFE1457F1895440C8E915C /* Pods-floorSpace-tvOSTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		764ABD4F24D956D4009A8B46 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				764ABD5024D95796009A8B46 /* OpenSans-Regular.ttf */,
+				764ABD5224D957C0009A8B46 /* OpenSans-SemiBold.ttf */,
+			);
+			name = fonts;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -347,7 +361,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				764ABD5324D957C0009A8B46 /* OpenSans-SemiBold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				764ABD5124D95796009A8B46 /* OpenSans-Regular.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

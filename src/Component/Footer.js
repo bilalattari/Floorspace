@@ -15,14 +15,15 @@ export default Footer = ({}) => (
   <View style={styles.footerView}>
     <Image source={require('../assets/home.png')} style={styles.imageIcon} />
     <Image source={require('../assets/filter.png')} style={styles.imageIcon} />
-    <TouchableOpacity style={styles.middleButton}>
+    <Image source={require('../assets/plus.png')} style={styles.middleButton} />
+    {/* <TouchableOpacity style={styles.middleButton}>
       <Icon
         type={'font-awesome'}
         name={'plus'}
         color={'#000'}
         containerStyle={{paddingTop: 3}}
       />
-    </TouchableOpacity>
+    </TouchableOpacity> */}
     <Image
       source={require('../assets/slideshow.png')}
       style={styles.imageIcon}
@@ -44,24 +45,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-
-    elevation: 8,
   },
   imageIcon: {height: 25, width: 25, resizeMode: 'contain'},
   middleButton: {
     marginTop: -41,
-    height: 50,
-    width: 50,
+    height: 70,
+    width: 70,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
     borderRadius: 125,
+    resizeMode: 'contain'
   },
 });

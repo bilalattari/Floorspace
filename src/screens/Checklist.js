@@ -46,7 +46,7 @@ class Checklist extends Component {
     let {checkList, images, openDetail} = this.state;
     let type = navigation.getParam('type');
     return (
-      <SafeAreaView>
+      <View>
         <Header
           leftComponent={{
             icon: 'close',
@@ -346,7 +346,7 @@ class Checklist extends Component {
             }}
           />
         </ScrollView>
-      </SafeAreaView>
+      </View>
     );
   }
 }

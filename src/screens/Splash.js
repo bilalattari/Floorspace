@@ -1,9 +1,11 @@
 /* eslint-disable */
 
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Image, StatusBar } from 'react-native';
+import SafeAreaView  from 'react-native-safe-area-view';
+
 // import auth from '@react-native-firebase/auth';
-function SplashScreen({navigation}) {
+function SplashScreen({ navigation }) {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -14,17 +16,20 @@ function SplashScreen({navigation}) {
     }, 1000);
   }, []);
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('../assets/logo.png')}
-        style={{
-          height: 180,
-          width: '60%',
-          resizeMode: 'contain',
-          marginBottom: 63,
-        }}
-      />
-    </View>
+    <SafeAreaView forceInset={{top: "never",bottom: "never"}} style={{flex: 1}}>
+      <StatusBar barStyle={"light-content"}/>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/logo.png')}
+          style={{
+            height: 180,
+            width: '60%',
+            resizeMode: 'contain',
+            marginBottom: 63,
+          }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -35,6 +40,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  topSafeArea: {
+    flex: 0, 
+    backgroundColor: "#000"
+}, 
 });
 
 export default SplashScreen;

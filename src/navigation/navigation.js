@@ -1,6 +1,6 @@
 import React from 'react';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import LoginScreen from '../screens/Login';
 import SplashScreen from '../screens/Splash';
 import Home from '../screens/Home';
@@ -24,15 +24,21 @@ const SplashStack = createStackNavigator(
       screen: SplashScreen,
     },
   },
-  {headerMode: null},
+  { headerMode: null, },
 );
+
+
+
 const AuthStack = createStackNavigator(
   {
     Login: {
       screen: LoginScreen,
     },
   },
-  {headerMode: null},
+  {
+    headerMode: null,
+  },
+
 );
 const AppStack = createStackNavigator(
   {
@@ -82,7 +88,7 @@ const AppStack = createStackNavigator(
       screen: RoomOverview,
     },
   },
-  {initialRouteName: 'Home', headerMode: null},
+  { initialRouteName: 'Home', headerMode: 'none', },
 );
 
 const App = createSwitchNavigator({
@@ -93,7 +99,7 @@ const App = createSwitchNavigator({
   //   screen: AuthStack,
   // },
   App: {
-    screen: AppStack,
+    screen:AppStack,
   },
 });
 

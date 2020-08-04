@@ -8,12 +8,12 @@
 
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
   StatusBar,
+  Constants,
 } from 'react-native';
 
 import {
@@ -24,13 +24,14 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Route from './src/navigation/navigation'
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view';
 
 const App: () => React$Node = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <Route />
-    </>
+    <SafeAreaProvider style={{ flex: 1 }}>
+        <Route />
+    </SafeAreaProvider>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, Component} from 'react';
-import {StyleSheet, View, FlatList, Image} from 'react-native';
+import {StyleSheet, View, FlatList, Image,SafeAreaView} from 'react-native';
 import {themeColor} from '../Constant/index';
 import Button from '../Component/Button';
 import Text from '../Component/Text';
@@ -131,12 +131,12 @@ class Home extends Component {
                   <Text
                     color={'#707070'}
                     text={`Created : ${item.created} ${item.createdTime}`}
-                    font={15}
+                    font={12}
                   />
                   <Text
                     color={'#707070'}
                     text={`Edited : ${item.modified} ${item.modifiedTime}`}
-                    font={15}
+                    font={12}
                   />
                 </View>
                 <TouchableOpacity style={styles.button}>
@@ -149,7 +149,7 @@ class Home extends Component {
                         ? '#1BBAC7'
                         : '#D96034'
                     }
-                    font={14}
+                    font={12}
                     bold={true}
                   />
                 </TouchableOpacity>
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 12,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',

@@ -8,7 +8,7 @@ class SectionList extends Component {
   renderItem = ({item}) => {
     return (
       <TouchableOpacity
-        onPress={() => this.props.navigation.navigate(type ,  {type : 'Edit'})}
+        onPress={() => this.props.navigation.navigate("type" ,  {type : 'Edit'})}
         style={{
           backgroundColor: '#fff',
           padding: 12,
